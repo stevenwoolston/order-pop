@@ -1,0 +1,11 @@
+.op-popper {
+    position: fixed;
+    bottom: 10px;
+    left: 30px;
+    width: 30vw;
+    height: 15vh;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 1vw;
+    z-index: 10;
+    padding: 2vh 2vw;
+}
