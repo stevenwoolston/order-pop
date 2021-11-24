@@ -8,10 +8,10 @@ jQuery(document).ready( function() {
         data : {action: "op_get_order"},
     })
     .then(function(data) {
+        // console.log(data);
         if (!data) {
             throw Error;
         }
-        console.log(data);
         return preparePopData(data);
     })
     .then(function(data) {
@@ -27,7 +27,7 @@ jQuery(document).ready( function() {
         if (orderPop) {
             var orderPopData = JSON.parse(orderPop);
             var minutesElapsed = Math.floor((Math.abs(new Date(orderPopData.last_notification) - new Date()) / 1000)/60);
-            console.log(minutesElapsed);
+            // console.log(minutesElapsed);
             orderPopData.interval = data.options.interval;
             if (minutesElapsed => data.options.interval) {
                 data.last_notification = new Date();

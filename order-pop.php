@@ -16,6 +16,7 @@ if ( !defined( 'ABSPATH' ) ) {
 }
 
 define("OP_PLUGIN_PATH", plugin_dir_path(__FILE__));
+define('OP_PLUGIN_URL', plugin_dir_url(__FILE__));
 define("OP_PLUGIN_BASENAME", plugin_basename(__FILE__));
 
 require_once(plugin_dir_path(__FILE__) . '/inc/op-config.php');

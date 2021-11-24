@@ -12,6 +12,12 @@ form {
     outline: 0 !important;
 }
 
+.op-nav-tab-wrapper > img {
+    height: 30px;
+    width: auto;
+    margin: 3px 0 0 10px;
+}
+
 .nav-tab {
     float: left;
     border: 1px solid #ccc;

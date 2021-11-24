@@ -3,20 +3,19 @@
 @package Woolston Web Design Developer Plugin
 */
 
-if ( ! defined('ABSPATH')) exit;  // if direct access 
+if (!defined('ABSPATH')) exit;  // if direct access 
 
 add_action("wp_ajax_op_get_order", "op_get_order");
-add_action("wp_ajax_nopriv_op_get_order", "op_get_order");
+add_action("wp_ajax_nopriv_op_get_order", "op_get_order");    
 
 function op_get_order() {
-   echo json_encode(op_get_orders());
-   die();
+    echo json_encode(op_get_orders());
+    die();
 }
 
 function op_get_orders() {
 
     $op_options = get_option('op-plugin');
-
     $args = array(
         'limit' => 1,
         'return' => 'ids',
@@ -33,9 +32,8 @@ function op_get_orders() {
         $product = $item->get_product();
     }
 
-    // Get the Order meta data in an unprotected array
     $data  = $order->get_data(); // The Order data
-    $product_data = $item->get_product();
+    // $product_data = $item->get_product();
 
     // $order_id        = $data['id'];
     // $order_parent_id = $data['parent_id'];

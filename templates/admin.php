@@ -1,5 +1,6 @@
 <div class="wrap op-plugin-options">
     <h1>Order Pop Settings</h1>
+
     <?php settings_errors(); ?>
 
     <form action="options.php" method="post">
@@ -8,6 +9,7 @@
         <h2 class="op-nav-tab-wrapper">
             <a href="#tab-1" class="nav-tab nav-tab-active">Manage Settings</a>
             <a href="#tab-2" class="nav-tab">About</a>
+            <img src="<?php echo OP_PLUGIN_URL ?>images/logo.png" alt="" />            
         </h2>
     
         <div id="tab-1" class="tab-pane active">
