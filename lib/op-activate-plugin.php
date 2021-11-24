@@ -12,11 +12,12 @@ function op_plugin_activate() {
     }
 
     $default_options = array(
-        'pop_interval_seconds' => 10,
+        'pop_interval_minutes' => 1,
+        'sale_message' => 'Buy now and get a great deal too.'
     );
     
-    $op_options = get_option('op-plugin');
-    $new_options = $default_options + (is_array($op_options) ? $op_options : array());
+    // $op_options = get_option('op_plugin');
+    // $new_options = $default_options + (is_array($op_options) ? $op_options : array());
     update_option('op-plugin', $default_options);
     flush_rewrite_rules();
     

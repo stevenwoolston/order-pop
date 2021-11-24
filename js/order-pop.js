@@ -8,25 +8,65 @@ jQuery(document).ready( function() {
         data : {action: "op_get_order"},
     })
     .then(function(data) {
+        if (!data) {
+            throw Error;
+        }
         console.log(data);
+        return preparePopData(data);
+    })
+    .then(function(data) {
+        // console.log(data);
+        if (!data) return;
+
         create_pop(data);
     });
  
+    function preparePopData(data) {
+        var orderPop = localStorage.getItem('order_pop');
+
+        if (orderPop) {
+            var orderPopData = JSON.parse(orderPop);
+            var minutesElapsed = Math.floor((Math.abs(new Date(orderPopData.last_notification) - new Date()) / 1000)/60);
+            console.log(minutesElapsed);
+            orderPopData.interval = data.options.interval;
+            if (minutesElapsed => data.options.interval) {
+                data.last_notification = new Date();
+                localStorage.setItem('order_pop', JSON.stringify(data));
+                return data;
+            }
+        }
+
+        //  never run before
+        data.last_notification = new Date();
+        localStorage.setItem('order_pop', JSON.stringify(data));
+        return null;
+    }
+
     function create_pop(data) {
         var popper = jQuery(`<div />`);
         var orderDate = new Date(data['order_date']);
+        var formattedDate = buildDate(orderDate);
         popper.attr('class', 'op-popper');
         
-        jQuery(`<span class="firstname">${data['first_name']}</span>`).appendTo(popper);
-        jQuery(`<span class="lastname"> ${data['last_name']}</span>`).appendTo(popper);
+        jQuery(
+            `<p><span class="firstname">${data.customer.first_name}</span>
+            <span class="lastname"> ${data.customer.last_name}</span>
+            <span> ordered </span>
+            <a class="product_url" href="${data.product.url}">${data.product.name}</a>
+            <span> in </span>
+            <span class="orderdate">${formattedDate.month} ${formattedDate.year}.</span></p>
+            <p>${data.options.sale_message}</p>`
+        ).appendTo(popper);
 
-        jQuery(`<span> ordered </span>`).appendTo(popper);
-
-        jQuery(`<span class="productname">${data['product_name']}</span>`).appendTo(popper);
-
-        jQuery(`<span> in </span>`).appendTo(popper);
-
-        jQuery(`<span class="orderdate">${orderDate}</span>`).appendTo(popper);
         popper.appendTo('body');
+    }
+
+    function buildDate(date) {
+        var year = date.getFullYear().toString();
+        var month = date.toLocaleString('default', { month: 'long' });
+        return {
+            year,
+            month
+        };
     }
  })
