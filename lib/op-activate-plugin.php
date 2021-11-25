@@ -12,8 +12,10 @@ function op_plugin_activate() {
     }
 
     $default_options = array(
+        'stop' => false,
         'pop_interval_minutes' => 1,
-        'sale_message' => 'Buy now and get a great deal too.'
+        'sale_message' => 'Buy now and get a great deal too.',
+        'excluded_categories' => Array()
     );
     
     // $op_options = get_option('op_plugin');

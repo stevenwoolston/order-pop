@@ -15,5 +15,6 @@ add_action('admin_menu', 'op_add_admin_page');
 
 function op_theme_create_settings_page() {
     $options = get_option('op-plugin');
+    // var_dump($options);
     require_once OP_PLUGIN_PATH . "/templates/admin.php";
 }

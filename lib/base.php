@@ -16,6 +16,13 @@ function op_get_order() {
 function op_get_orders() {
 
     $op_options = get_option('op-plugin');
+
+    if ($op_options['stop']) {
+        die();
+    }
+
+    $excluded_categories = $op_options['excluded_categories'];
+
     $args = array(
         'limit' => 1,
         'return' => 'ids',

@@ -49,7 +49,11 @@ jQuery(document).ready( function() {
         popper.attr('class', 'op-popper');
         
         jQuery(
-            `<p><span class="firstname">${data.customer.first_name}</span>
+            `<button type="button" class="close" aria-label="Close" 
+                onClick="document.querySelector('.op-popper').style.left = '-999px'">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            <p><span class="firstname">${data.customer.first_name}</span>
             <span class="lastname"> ${data.customer.last_name}</span>
             <span> ordered </span>
             <a class="product_url" href="${data.product.url}">${data.product.name}</a>

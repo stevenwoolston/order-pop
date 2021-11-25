@@ -37,7 +37,7 @@ register_deactivation_hook(__FILE__, 'op_deactivation_hook');
 function op_enqueue_assets() {
     wp_enqueue_style('op-style', plugin_dir_url(__FILE__) . '/css/order-pop.css', array(), '1.0', 'all');
     wp_register_script('op_order_script', plugin_dir_url(__FILE__) . '/js/order-pop.js', array('jquery') );
-    wp_localize_script('op_order_script', 'myAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' )));        
+    wp_localize_script('op_order_script', 'myAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' )));
     wp_enqueue_script('jquery' );
     wp_enqueue_script('op_order_script' );
 }
@@ -46,6 +46,11 @@ function op_admin_enqueue_assets() {
     wp_enqueue_media();
     wp_enqueue_style('op-developer-style', plugin_dir_url(__FILE__) . '/css/op-admin.css', array(), '1.0', 'all');
     wp_enqueue_script('op-developer-script', plugin_dir_url(__FILE__) . '/js/op-admin.js', array('jquery'), '1.0', true);
+
+    //Enqueue CSS just for us
+    if ( isset( $_GET['page'] ) && $_GET['page'] == 'op_plugin' ) {
+        wp_enqueue_style('op-bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css');
+    }    
 }
 
 function op_activation_hook() {

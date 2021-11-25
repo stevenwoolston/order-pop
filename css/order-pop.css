@@ -10,10 +10,18 @@
     padding: 2vh 2vw;
     color: #fff;
     border: 5px solid rgb(49,201,213);
+    transition: all 1s ease-in-out;
 }
 
 .op-popper p, .op-popper a {
     color: #fff;
+}
+
+.op-popper button.close {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    color: #fff;    
 }
 
 .wp-admin .op-popper {
