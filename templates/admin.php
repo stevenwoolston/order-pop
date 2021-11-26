@@ -16,11 +16,11 @@
             <table class="form-table">
                 <tr>
                     <th scope="row">
-                        <label for="op-plugin[stop]">Stop all notifications:</label>
+                        <label for="op-plugin[stop_notifications]">Stop all notifications:</label>
                     </th>
                     <td>
-                        <input name="op-plugin[stop]" type="checkbox" class="form-control"
-                            <?php echo ($options['stop'] ? ' checked="checked" ' : '') ?>
+                        <input name="op-plugin[stop_notifications]" type="checkbox" class="form-control"
+                            <?php echo ($options['stop_notifications'] ? ' checked="checked" ' : '') ?>
                             value="1" />
                     </td>
                 </tr>
@@ -38,6 +38,36 @@
                 </tr>
                 <tr>
                     <th scope="row">
+                        <label for="op-plugin[order_query_start_date]">Order date range:</label>
+                    </th>
+                    <td class="d-flex align-items-center">
+                        <div class="pr-2">
+                            <input name="op-plugin[order_query_start_date]" type="date"
+                                class="form-control"
+                                value="<?php echo ($options['order_query_start_date']) ?>">
+                        </div>
+                        <label class="pl-2 pr-3 pt-2">to</label>
+                        <div>
+                            <input name="op-plugin[order_query_end_date]" type="date"
+                                class="form-control"
+                                value="<?php echo ($options['order_query_end_date']) ?>">
+                        </div>                        
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="op-plugin[pop_background_colour]">Pop background colour:</label>
+                    </th>
+                    <td>
+                        <div class="w-25">
+                            <input name="op-plugin[pop_background_colour]" type="color"
+                                class="form-control"
+                                value="<?php echo ($options['pop_background_colour']) ?>">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
                         <label for="op-plugin[sale_message]">Sale message after order information:</label>
                     </th>
                     <td>
@@ -49,7 +79,8 @@
         </div>
 
         <div id="tab-2" class="tab-pane">
-            <h2>Configure the product categories to pop.</h2>
+            <h2>Configure the product categories to pop</h2>
+            <p>Bear in mind that de-selecting Categories could result in no orders being found.</p>
             <table class="table mt-3">
                 <thead>
                     <tr class="bg-light text-dark">
@@ -68,16 +99,20 @@
     );
     
     $product_categories = get_terms('product_cat', $cat_args);
-    foreach($product_categories as $key => $category) {
-        $category_name = $category->name;
-        $term_id = $category->term_id;
-        echo '<tr>';
-        echo '<td class="text-center bg-light">';
-        echo '<input name="op-plugin[excluded_categories][]" type="checkbox" ';
-        echo 'value="' .$term_id. '"';
-        echo (in_array($term_id, $options['excluded_categories']) ? 'checked="checked"' : ''). '/></td>';
-        echo '<td>' .$category_name. '</td>';
-        echo '</tr>';
+    if (empty($product_categories)) {
+        echo '<tr><td class="text-center">There are no categories.</td></tr>';
+    } else {
+        foreach($product_categories as $key => $category) {
+            $category_name = $category->name;
+            $term_id = $category->term_id;
+            echo '<tr>';
+            echo '<td class="text-center bg-light">';
+            echo '<input name="op-plugin[excluded_categories][]" type="checkbox" ';
+            echo 'value="' .$term_id. '"';
+            echo (isset($options['excluded_categories']) && in_array($term_id, $options['excluded_categories']) ? 'checked="checked"' : ''). '/></td>';
+            echo '<td>' .$category_name. '</td>';
+            echo '</tr>';
+        }
     }
 ?>
             </table>

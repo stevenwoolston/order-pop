@@ -12,8 +12,11 @@ function op_plugin_activate() {
     }
 
     $default_options = array(
-        'stop' => false,
+        'stop_notifications' => false,
         'pop_interval_minutes' => 1,
+        'pop_background_colour' => '#15bbd1',
+        'order_query_start_date' => '',
+        'order_query_end_date' => '',
         'sale_message' => 'Buy now and get a great deal too.',
         'excluded_categories' => Array()
     );

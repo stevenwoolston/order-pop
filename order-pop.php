@@ -25,7 +25,7 @@ require_once(plugin_dir_path(__FILE__) . '/lib/op-activate-plugin.php');
 
 require_once(plugin_dir_path(__FILE__) . '/lib/op-admin-options.php');
 
-require_once(plugin_dir_path(__FILE__) . '/lib/base.php');
+require_once(plugin_dir_path(__FILE__) . '/lib/popController.php');
 
 add_action('init', 'op_enqueue_assets');
 
@@ -49,7 +49,7 @@ function op_admin_enqueue_assets() {
 
     //Enqueue CSS just for us
     if ( isset( $_GET['page'] ) && $_GET['page'] == 'op_plugin' ) {
-        wp_enqueue_style('op-bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css');
+        wp_enqueue_style('op-bootstrap', plugin_dir_url(__FILE__) . '/css/bootstrap.min.css');
     }    
 }
 
