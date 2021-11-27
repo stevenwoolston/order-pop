@@ -79,6 +79,31 @@ form {
     display: block;
 }
 
+.op-plugin-options {
+
+    .tab-pane {
+
+        textarea {
+            height: 120px;
+        }
+
+        .available-tags {
+            display: flex;
+            justify-content: flex-start;
+            padding: 10px 0;
+            flex-wrap: wrap;
+
+            a {
+                flex: 0 0 auto;
+                margin-right: 10px;
+
+                pre {
+                    font-size: 16px;
+                }
+            }
+        }
+    }
+}
 .op-plugin-options table th, .op-plugin-options table td {
     padding: 5px;
 }

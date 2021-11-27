@@ -8,7 +8,7 @@ jQuery(document).ready( function() {
         data : {action: "op_get_order"},
     })
     .then(function(data) {
-        console.log(data);
+        // console.log(data);
         if (!data) {
             throw Error;
         }
@@ -47,7 +47,8 @@ jQuery(document).ready( function() {
     function create_pop(data) {
         var popper = jQuery(`<div />`);
         var orderDate = new Date(data['order_date']);
-        var formattedDate = buildDate(orderDate);
+        var formattedDate = buildDate(data['order_date']);
+        console.log(formattedDate);
         popper.attr('class', 'op-popper');
 
         if (data.options.pop_background_colour) {
@@ -78,9 +79,9 @@ jQuery(document).ready( function() {
     }
 
     function buildDate(date) {
-        var day = date.getDate().toString();
-        var year = date.getFullYear().toString();
-        var month = date.toLocaleString('default', { month: 'long' });
+        var day = moment(date, 'YYYY-MM-DD').format('Do');
+        var month = moment(date, 'YYYY-MM-DD').format('MMMM');
+        var year = moment(date, 'YYYY-MM-DD').format('YYYY');
         return {
             day,
             month,

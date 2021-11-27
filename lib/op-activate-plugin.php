@@ -17,7 +17,9 @@ function op_plugin_activate() {
         'pop_background_colour' => '#15bbd1',
         'order_query_start_date' => '',
         'order_query_end_date' => '',
-        'sale_message' => 'Buy now and get a great deal too.',
+        'sale_message' => '{{FirstName}} {{LastName}} ordered {{ProductName}} ({{ProductCategoryName}}) on {{OrderDateDay}} {{OrderDateMonthName}} {{OrderDateYear}}.
+
+Buy now and get a great deal too.',
         'excluded_categories' => Array()
     );
     
