@@ -1,5 +1,4 @@
 <?php
-
 add_filter('plugin_action_links_' . OP_PLUGIN_BASENAME, 'op_build_settings_link');
 
 function op_build_settings_link($links) {

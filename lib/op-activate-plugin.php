@@ -3,25 +3,23 @@
 @package Woolston Web Design Developer Plugin
 */
 
-if ( ! defined('ABSPATH')) exit;  // if direct access 
+if (! defined('ABSPATH')) exit;  // if direct access 
 
 function op_plugin_activate() {
   
-    if ( !is_admin() ) {
+    if (!is_admin()) {
         return;
     }
 
     $default_options = array(
         'stop_notifications' => false,
-        'pop_interval_minutes' => 0,
+        'pop_interval_minutes' => 5,
         'pop_background_colour' => '#15bbd1',
         'pop_font_colour' => '#ffffff',
         'pop_last_order_count' => 25,
-        'sale_message' => '{{FirstName}} {{LastName}} ordered {{ProductName}} ({{ProductCategoryName}}) on {{OrderDateDay}} {{OrderDateMonthName}} {{OrderDateYear}}.
-
-Buy now and get a great deal too.',
+        'sale_message' => '',
         'excluded_categories' => Array()
-    );
+   );
     
     // $op_options = get_option('op_plugin');
     // $new_options = $default_options + (is_array($op_options) ? $op_options : array());
@@ -35,11 +33,19 @@ Buy now and get a great deal too.',
 
 function op_plugin_deactivate() {
   
-    if ( !is_admin() || !get_option( 'op-plugin' ) ) {
+    if (!is_admin() || !get_option('op-plugin')) {
+        return;
+    }
+
+    flush_rewrite_rules();
+
+}
+
+function op_plugin_uninstall() {
+    if (!is_admin() || !get_option('op-plugin')) {
         return;
     }
 
     delete_option('op-plugin');
     flush_rewrite_rules();
-
 }

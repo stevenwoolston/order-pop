@@ -31,7 +31,7 @@ function op_get_orders() {
         'status' => 'completed',
         'orderby' => 'date',
         'order' => 'DESC'
-    );
+   );
 
     $orders = wc_get_orders($args);
 	$order_id = $orders[array_rand($orders, 1)];
@@ -87,21 +87,21 @@ function op_get_orders() {
                 'pop_background_colour' => $op_options['pop_background_colour'],
                 'pop_font_colour' => $op_options['pop_font_colour'],
                 // 'test' => $excluded_categories
-            ),
+           ),
             'order_date' => $order_date_created,
             'customer' => array(
                 'first_name' => $billing_first_name,
                 'last_name' => $billing_last_name,
                 'city' => ucwords(strtolower($billing_city)),
                 'state' => $billing_state
-            ),
+           ),
             'product' => array(
                 'name' => $product_name,
                 'url' => $product_url,
                 'image' => $product_image,
 				'category' => $category,
-            )
-        );
+           )
+       );
 }
 
 function getExcludedCategories($categories) {

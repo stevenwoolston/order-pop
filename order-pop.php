@@ -11,7 +11,7 @@ Author URI: https://www.woolston.com.au
 GitHub Plugin URI: https://github.com/stevenwoolston/order-pop
 */
 
-if ( !defined( 'ABSPATH' ) ) {
+if (!defined('ABSPATH')) {
     exit;
 }
 
@@ -32,7 +32,7 @@ add_action('init', 'op_enqueue_assets');
 add_action('admin_enqueue_scripts', 'op_admin_enqueue_assets');
 register_activation_hook(__FILE__, 'op_activation_hook');
 register_deactivation_hook(__FILE__, 'op_deactivation_hook');
-
+register_uninstall_hook(__FILE__, 'op_uninstall_hook');
 
 function op_enqueue_assets() {
     wp_enqueue_style('op-style', plugin_dir_url(__FILE__) . '/dist/css/order-pop.min.css', array(), '0.13', 'all');
@@ -50,7 +50,7 @@ function op_admin_enqueue_assets() {
     wp_enqueue_script('op-developer-script', plugin_dir_url(__FILE__) . '/dist/js/op-admin.min.js', array('jquery'), '0.11', true);
 
     //Enqueue CSS just for us
-    if ( isset( $_GET['page'] ) && $_GET['page'] == 'op_plugin' ) {
+    if (isset($_GET['page']) && $_GET['page'] == 'op_plugin') {
         wp_enqueue_style('op-bootstrap', plugin_dir_url(__FILE__) . '/dist/css/bootstrap.min.css');
     }    
 }
@@ -61,4 +61,8 @@ function op_activation_hook() {
 
 function op_deactivation_hook() {
     op_plugin_deactivate();
+}
+
+function op_uninstall_hook() {
+    op_plugin_uninstall();
 }
