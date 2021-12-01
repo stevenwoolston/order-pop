@@ -13,10 +13,10 @@ function op_plugin_activate() {
 
     $default_options = array(
         'stop_notifications' => false,
-        'pop_interval_minutes' => 1,
+        'pop_interval_minutes' => 0,
         'pop_background_colour' => '#15bbd1',
-        'order_query_start_date' => '',
-        'order_query_end_date' => '',
+        'pop_font_colour' => '#ffffff',
+        'pop_last_order_count' => 25,
         'sale_message' => '{{FirstName}} {{LastName}} ordered {{ProductName}} ({{ProductCategoryName}}) on {{OrderDateDay}} {{OrderDateMonthName}} {{OrderDateYear}}.
 
 Buy now and get a great deal too.',

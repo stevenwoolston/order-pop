@@ -38,20 +38,14 @@
                 </tr>
                 <tr>
                     <th scope="row">
-                        <label for="op-plugin[order_query_start_date]">Order date range:</label>
+                        <label for="op-plugin[pop_last_order_count]">Last orders to pop:</label>
                     </th>
-                    <td class="d-flex align-items-center">
-                        <div class="pr-2">
-                            <input name="op-plugin[order_query_start_date]" type="date"
+                    <td>
+                        <div class="w-25">
+                            <input name="op-plugin[pop_last_order_count]" type="number"
                                 class="form-control"
-                                value="<?php echo ($options['order_query_start_date']) ?>">
+                                value="<?php echo ($options['pop_last_order_count']) ?>">
                         </div>
-                        <label class="pl-2 pr-3 pt-2">to</label>
-                        <div>
-                            <input name="op-plugin[order_query_end_date]" type="date"
-                                class="form-control"
-                                value="<?php echo ($options['order_query_end_date']) ?>">
-                        </div>                        
                     </td>
                 </tr>
                 <tr>
@@ -63,6 +57,18 @@
                             <input name="op-plugin[pop_background_colour]" type="color"
                                 class="form-control"
                                 value="<?php echo ($options['pop_background_colour']) ?>">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="op-plugin[pop_font_colour]">Pop text colour:</label>
+                    </th>
+                    <td>
+                        <div class="w-25">
+                            <input name="op-plugin[pop_font_colour]" type="color"
+                                class="form-control"
+                                value="<?php echo ($options['pop_font_colour']) ?>">
                         </div>
                     </td>
                 </tr>

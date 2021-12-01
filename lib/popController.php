@@ -22,32 +22,28 @@ function op_get_orders() {
     }
     
 	$excluded_categories = $op_options['excluded_categories'] ? getExcludedCategories($op_options['excluded_categories']) : [];
-
-    $initial_date = $op_options['order_query_start_date'] != '' ? $op_options['order_query_start_date'] : '0000-01-01';
-    $final_date = $op_options['order_query_end_date'] != '' ? $op_options['order_query_end_date'] : date('Y-m-d');
+    $pop_last_order_count = $op_options['pop_last_order_count'];
+    // $initial_date = $op_options['order_query_start_date'] != '' ? $op_options['order_query_start_date'] : '0000-01-01';
+    // $final_date = $op_options['order_query_end_date'] != '' ? $op_options['order_query_end_date'] : date('Y-m-d');
     $args = array(
-        // 'limit' => 1,
-        //'return' => 'ids',
+        'limit' => $pop_last_order_count,
+        'return' => 'ids',
         'status' => 'completed',
-        'orderby' => 'rand',
-        'date_created' => $initial_date .'...'. $final_date
+        'orderby' => 'date',
+        'order' => 'DESC'
     );
 
     $orders = wc_get_orders($args);
+	$order_id = $orders[array_rand($orders, 1)];
+	$order = wc_get_order($order_id);
+	if (!$order) {
+		die();
+	}
 
-    $product = [];
-    foreach($orders as $order_id => $order) {
-        $checked_product = getQualifyingProduct($order, $excluded_categories);
-		if ($checked_product) {
-            $product = $checked_product;
-			break;
-		}
-    }
-
-	// var_dump($order);
-    if (!$order || empty($product)) {
-        die();
-    }
+	$product = getQualifyingProduct($order, $excluded_categories);
+	if (empty($product)) {
+		die();
+	}
 
     // $product = [];
     // foreach($order->get_items() as $item_id => $item) {
@@ -78,10 +74,10 @@ function op_get_orders() {
     // $billing_company    = $data['billing']['company'];
     // $billing_address_1  = $data['billing']['address_1'];
     // $billing_address_2  = $data['billing']['address_2'];
-    // $billing_city       = $data['billing']['city'];
-    // $billing_state      = $data['billing']['state'];
+    $billing_city       = $data['billing']['city'];
+    $billing_state      = $data['billing']['state'];
     // $billing_postcode   = $data['billing']['postcode'];
-    // $billing_country    = $data['billing']['country'];    
+    // $billing_country    = $data['billing']['country'];  
 
     return
         array (
@@ -89,12 +85,15 @@ function op_get_orders() {
                 'interval' => $op_options['pop_interval_minutes'],
                 'sale_message' => $op_options['sale_message'],
                 'pop_background_colour' => $op_options['pop_background_colour'],
+                'pop_font_colour' => $op_options['pop_font_colour'],
                 // 'test' => $excluded_categories
             ),
             'order_date' => $order_date_created,
             'customer' => array(
                 'first_name' => $billing_first_name,
-                'last_name' => $billing_last_name    
+                'last_name' => $billing_last_name,
+                'city' => ucwords(strtolower($billing_city)),
+                'state' => $billing_state
             ),
             'product' => array(
                 'name' => $product_name,

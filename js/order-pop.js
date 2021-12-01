@@ -8,7 +8,7 @@ jQuery(document).ready( function() {
         data : {action: "op_get_order"},
     })
     .then(function(data) {
-        // console.log(data);
+        console.log(data);
         if (!data) {
             throw Error;
         }
@@ -48,6 +48,8 @@ jQuery(document).ready( function() {
         var popper = jQuery(`<div />`);
         var orderDate = new Date(data['order_date']);
         var formattedDate = buildDate(data['order_date']);
+        var fontColour = data.options.pop_font_colour;
+
         console.log(formattedDate);
         popper.attr('class', 'op-popper');
 
@@ -57,21 +59,20 @@ jQuery(document).ready( function() {
         
         jQuery(
             `<button type="button" class="close" aria-label="Close" 
-                    style="background-color: transparent; padding: 0;"
+                    style="background-color: transparent; padding: 0; color: ${fontColour};"
                     onClick="document.querySelector('.op-popper').style.left = '-999px'">
                 <span aria-hidden="true">&times;</span>
             </button>
             <div class="op-content-container">
-                <div class="op-image">${data.product.image}</div>
-                <div class="op-content">
-                    <p><span class="firstname">${data.customer.first_name}</span>
-                    <span class="lastname"> ${data.customer.last_name}</span>
-                    <span> ordered </span>
-                    <a class="product_url" href="${data.product.url}">${data.product.name}</a> (${data.product.category})
-                    <span> on </span>
-                    <span class="orderdate">${formattedDate.day} ${formattedDate.month} ${formattedDate.year}.</span></p>
-                    <p>${data.options.sale_message}</p>
+                <div class="op-content" style="color: ${fontColour}">
+                    <span class="orderdate meta" style="color: ${fontColour}">${formattedDate}</span>
+                    <p class="customer-details pt-0" style="color: ${fontColour}">${data.customer.first_name} ${data.customer.last_name.charAt(0)} from ${data.customer.city}, ${data.customer.state} bought ..</p>
+                    <p class="product-name" style="color: ${fontColour}">${data.product.name}</p>
+                    <span class="meta" style="color: ${fontColour}">
+                        <a href="#" style="color: ${fontColour}">Call to action link</a>
+                    </span>
                 </div>
+                <div class="op-image">${data.product.image}</div>
             </div>`
         ).appendTo(popper);
 
@@ -79,6 +80,19 @@ jQuery(document).ready( function() {
     }
 
     function buildDate(date) {
+
+        var diff = moment.duration(moment().diff(date)).asHours();
+        console.log(date, diff);
+        if (diff > 48) {
+            return `${parseInt(diff/24)} days ago`;
+        }
+
+        if (diff < 1) {
+            return `${parseInt(diff*60)} min ago`;
+        }
+
+        return `${parseInt(diff)} hours ago`;
+
         var day = moment(date, 'YYYY-MM-DD').format('Do');
         var month = moment(date, 'YYYY-MM-DD').format('MMMM');
         var year = moment(date, 'YYYY-MM-DD').format('YYYY');

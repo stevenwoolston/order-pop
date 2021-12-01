@@ -6,7 +6,6 @@
     left: 15px;
     width: 30vw;
     height: 15vh;
-    background-color: rgba(49,201,213, 0.9);
     z-index: 10;
     padding: 0 10px;
     color: #fff;
@@ -45,7 +44,6 @@
                 max-width: 100px !important;
                 height: auto;
                 width: 100px !important;
-                border-radius: 50%;
 
                 @include media-breakpoint-down(sm) {
                     max-width: 80px !important;
@@ -70,7 +68,14 @@
             @include media-breakpoint-down(sm) {
                 line-height: 1.4em;
             }
+        }
 
+        .meta {
+            font-size: 0.8em;
+        }
+        
+        .product-name {
+            font-size: 1.2em;
         }
     }
 
