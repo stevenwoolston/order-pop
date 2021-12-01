@@ -60,10 +60,12 @@
         padding: 2vh 2vw;
         flex: 1 1 auto;
         justify-content: center;
+        font-kerning: auto;
 
         p {
             padding: 0 0 10px 0;
             line-height: 1.2em;
+            font-kerning: auto;
 
             @include media-breakpoint-down(sm) {
                 line-height: 1.4em;
@@ -72,10 +74,12 @@
 
         .meta {
             font-size: 0.8em;
+            font-kerning: auto;
         }
         
         .product-name {
             font-size: 1.2em;
+            font-kerning: auto;
         }
     }
 

@@ -72,30 +72,6 @@
                         </div>
                     </td>
                 </tr>
-                <tr>
-                    <th scope="row">
-                        <label for="op-plugin[sale_message]">Sale message after order information:</label>
-                    </th>
-                    <td>
-                        <textarea class="form-control"
-                            name="op-plugin[sale_message]"><?php echo ($options['sale_message']) ?></textarea>
-                            <div class="py-2">
-                                These are your available tags. Click in the field above where you want to put the tag, then 
-                                click the tag link below to insert it.
-                            </div>
-                        <span class="available-tags">
-                            <a href="#"><pre><code>FirstName</code></pre></a>
-                            <a href="#"><pre><code>LastName</code></pre></a>
-                            <a href="#"><pre><code>ProductName</code></pre></a>
-                            <a href="#"><pre><code>ProductCategoryName</code></pre></a>
-                            <a href="#"><pre><code>OrderDateFullDD-MMM-YYYY</code></pre></a>
-                            <a href="#"><pre><code>OrderDateDay</code></pre></a>
-                            <a href="#"><pre><code>OrderDateMonthNumber</code></pre></a>
-                            <a href="#"><pre><code>OrderDateMonthName</code></pre></a>
-                            <a href="#"><pre><code>OrderDateYear</code></pre></a>
-                        </span>
-                    </td>
-                </tr>                
             </table>
         </div>
 

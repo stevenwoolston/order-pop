@@ -35,10 +35,10 @@ register_deactivation_hook(__FILE__, 'op_deactivation_hook');
 
 
 function op_enqueue_assets() {
-    wp_enqueue_style('op-style', plugin_dir_url(__FILE__) . '/dist/css/order-pop.min.css', array(), '0.12', 'all');
+    wp_enqueue_style('op-style', plugin_dir_url(__FILE__) . '/dist/css/order-pop.min.css', array(), '0.13', 'all');
 
     wp_register_script('momentjs', plugin_dir_url(__FILE__) . '/dist/js/moment-with-locales.min.js', array('jquery'));
-    wp_register_script('op_order_script', plugin_dir_url(__FILE__) . '/dist/js/order-pop.min.js', array('jquery', 'momentjs'), '0.12');
+    wp_register_script('op_order_script', plugin_dir_url(__FILE__) . '/dist/js/order-pop.min.js', array('jquery', 'momentjs'), '0.13');
     wp_localize_script('op_order_script', 'myAjax', array('ajaxurl' => admin_url('admin-ajax.php')));
     wp_enqueue_script('jquery');
     wp_enqueue_script('op_order_script');
