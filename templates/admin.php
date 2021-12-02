@@ -9,7 +9,7 @@
         <h2 class="op-nav-tab-wrapper">
             <a href="#tab-1" class="nav-tab nav-tab-active">Manage Settings</a>
             <a href="#tab-2" class="nav-tab">Product Categories</a>
-            <a href="#tab-3" class="nav-tab">About</a>
+            <a href="#tab-3" class="nav-tab d-none">About</a>
         </h2>
     
         <div id="tab-1" class="tab-pane active">
@@ -115,7 +115,7 @@
             </table>
         </div>
 
-        <div id="tab-3" class="tab-pane">
+        <div id="tab-3" class="tab-pane d-none">
             <h2>About</h2>
             Steven Woolston<br />
             Woolston Web Design<br />

@@ -8,7 +8,7 @@ jQuery(document).ready( function() {
         data : {action: "op_get_order"},
     })
     .then(function(data) {
-        console.log(data);
+        // console.log(data);
         if (!data) {
             throw Error;
         }
@@ -50,7 +50,6 @@ jQuery(document).ready( function() {
         var formattedDate = buildDate(data['order_date']);
         var fontColour = data.options.pop_font_colour;
 
-        console.log(formattedDate);
         popper.attr('class', 'op-popper');
 
         if (data.options.pop_background_colour) {
@@ -69,7 +68,7 @@ jQuery(document).ready( function() {
                     <p class="customer-details pt-0" style="color: ${fontColour}">${data.customer.first_name} ${data.customer.last_name.charAt(0)} from ${data.customer.city}, ${data.customer.state} bought ..</p>
                     <p class="product-name" style="color: ${fontColour}">${data.product.name}</p>
                     <span class="meta" style="color: ${fontColour}">
-                        <a href="#" style="color: ${fontColour}">Call to action link</a>
+                        <a href="${data.product.url}" style="color: ${fontColour}">Click here to view</a>
                     </span>
                 </div>
                 <div class="op-image">${data.product.image}</div>
@@ -82,7 +81,7 @@ jQuery(document).ready( function() {
     function buildDate(date) {
 
         var diff = moment.duration(moment().diff(date)).asHours();
-        console.log(date, diff);
+        // console.log(date, diff);
         if (diff > 48) {
             return `${parseInt(diff/24)} days ago`;
         }
@@ -92,14 +91,5 @@ jQuery(document).ready( function() {
         }
 
         return `${parseInt(diff)} hours ago`;
-
-        var day = moment(date, 'YYYY-MM-DD').format('Do');
-        var month = moment(date, 'YYYY-MM-DD').format('MMMM');
-        var year = moment(date, 'YYYY-MM-DD').format('YYYY');
-        return {
-            day,
-            month,
-            year,
-        };
     }
  })

@@ -11,6 +11,10 @@ function op_plugin_activate() {
         return;
     }
 
+    if (!class_exists('WooCommerce')) {
+        die('Plugin could not be activated because Woocommerce was not detected.');
+    }
+
     $default_options = array(
         'stop_notifications' => false,
         'pop_interval_minutes' => 5,

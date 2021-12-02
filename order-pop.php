@@ -4,9 +4,9 @@
 @version 0.1.0
 Plugin Name: Order Pop
 Plugin URI: https://github.com/stevenwoolston/order-pop
-Description: Sales Order Pop Notification
+Description: Woocommerce Order Pop Notification. Display previous orders to your customers to promote sales.
 Version: 0.1
-Author: Steven Woolston
+Author: Woolston Web Design
 Author URI: https://www.woolston.com.au
 GitHub Plugin URI: https://github.com/stevenwoolston/order-pop
 */
