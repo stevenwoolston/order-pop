@@ -72,6 +72,18 @@
                         </div>
                     </td>
                 </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="op-plugin[debug_active]">Enable debugging:</label>
+                    </th>
+                    <td>
+                        <div class="w-25">
+                            <input name="op-plugin[debug_active]" type="checkbox" class="form-control"
+                                <?php echo ($options['debug_active'] ? ' checked="checked" ' : '') ?>
+                                value="1" />
+                        </div>
+                    </td>
+                </tr>
             </table>
         </div>
 

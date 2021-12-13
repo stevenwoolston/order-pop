@@ -57,12 +57,12 @@ jQuery(document).ready( function() {
         }
         
         jQuery(
-            `<button type="button" class="close" aria-label="Close" 
-                    style="background-color: transparent; padding: 0; color: ${fontColour};"
-                    onClick="document.querySelector('.op-popper').style.left = '-999px'">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            <div class="op-content-container">
+            `<div class="op-content-container">
+                <button type="button" class="close" aria-label="Close" 
+                        style="background-color: transparent; padding: 0; color: ${fontColour};"
+                        onClick="document.querySelector('.op-popper').style.left = '-999px'">
+                    <span aria-hidden="true">&times;</span>
+                </button>
                 <div class="op-content" style="color: ${fontColour}">
                     <span class="orderdate meta" style="color: ${fontColour}">${formattedDate}</span>
                     <p class="customer-details pt-0" style="color: ${fontColour}">${data.customer.first_name} ${data.customer.last_name.charAt(0)} from ${data.customer.city}, ${data.customer.state} bought ..</p>
@@ -76,6 +76,10 @@ jQuery(document).ready( function() {
         ).appendTo(popper);
 
         popper.appendTo('body');
+
+        if (data.options.debugging_enabled) {
+            console.log(data);
+        }
     }
 
     function buildDate(date) {

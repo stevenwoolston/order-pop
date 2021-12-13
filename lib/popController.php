@@ -30,7 +30,21 @@ function op_get_orders() {
         'return' => 'ids',
         'status' => 'completed',
         'orderby' => 'date',
-        'order' => 'DESC'
+        'order' => 'DESC',
+        'meta_query' => array(
+            'relation' => 'AND',
+            array(
+                'meta_key' => 'billing_first_name',
+                'meta_value' => '',
+                'meta_compare' => '!=',
+            ),
+            array(
+                'meta_key' => 'billing_last_name',
+                'meta_value' => '',
+                'meta_compare' => '!=',
+            )            
+        )
+        
    );
 
     $orders = wc_get_orders($args);
@@ -51,6 +65,7 @@ function op_get_orders() {
     // }
 
     $data  = $order->get_data(); // The Order data
+    $data['product'] = $product;
     // $product_data = $item->get_product();
 
     // $order_id        = $data['id'];
@@ -86,6 +101,7 @@ function op_get_orders() {
                 'sale_message' => $op_options['sale_message'],
                 'pop_background_colour' => $op_options['pop_background_colour'],
                 'pop_font_colour' => $op_options['pop_font_colour'],
+                'debugging_enabled' => $op_options['debug_active'],
                 // 'test' => $excluded_categories
            ),
             'order_date' => $order_date_created,
@@ -100,7 +116,8 @@ function op_get_orders() {
                 'url' => $product_url,
                 'image' => $product_image,
 				'category' => $category,
-           )
+            ),
+            'debug' => $data
        );
 }
 
