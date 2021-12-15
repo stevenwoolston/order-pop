@@ -115,8 +115,11 @@
     }
 }
 
-.wp-admin .op-popper {
-    display: none;
+.wp-admin,
+.login.login-action-login {
+    .op-popper {
+        display: none;
+    }
 }
 
 

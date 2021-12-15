@@ -8,8 +8,9 @@
 
         <h2 class="op-nav-tab-wrapper">
             <a href="#tab-1" class="nav-tab nav-tab-active">Manage Settings</a>
-            <a href="#tab-2" class="nav-tab">Product Categories</a>
-            <a href="#tab-3" class="nav-tab d-none">About</a>
+            <a href="#tab-2" class="nav-tab">Custom CSS</a>
+            <a href="#tab-3" class="nav-tab">Product Categories</a>
+            <a href="#tab-4" class="nav-tab d-none">About</a>
         </h2>
     
         <div id="tab-1" class="tab-pane active">
@@ -88,6 +89,12 @@
         </div>
 
         <div id="tab-2" class="tab-pane">
+            <h2>Configure customised CSS</h2>
+            <textarea name="op-plugin[custom_css]" class="form-control"
+                style="height: 50vh"><?php echo $options['custom_css']; ?></textarea>
+        </div>
+
+        <div id="tab-3" class="tab-pane">
             <h2>Configure the product categories to pop</h2>
             <p>Bear in mind that de-selecting Categories could result in no orders being found.</p>
             <table class="table mt-3">
@@ -127,12 +134,12 @@
             </table>
         </div>
 
-        <div id="tab-3" class="tab-pane d-none">
+        <div id="tab-4" class="tab-pane d-none">
             <h2>About</h2>
             Steven Woolston<br />
             Woolston Web Design<br />
             Contact: 0407 077 508<br />
-            Email: <a href="mailto:design@woolston.comm.au">design@woolston.comm.au</a>
+            Email: <a href="mailto:design@woolston.com.au">design@woolston.com.au</a>
         </div>
 
         <?php submit_button();  ?>
