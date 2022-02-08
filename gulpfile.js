@@ -4,9 +4,7 @@ var gulp = require("gulp"),
     rename = require("gulp-rename"),
     sourcemaps = require("gulp-sourcemaps"),
     autoprefixer = require("gulp-autoprefixer"),
-    livereload = require('gulp-livereload'),
-    gutil = require('gulp-util'),
-    ftp = require('vinyl-ftp');
+    livereload = require('gulp-livereload');
 
 gulp.task('watch', function () {
     livereload.listen();
