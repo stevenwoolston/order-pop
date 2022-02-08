@@ -22,6 +22,8 @@ function op_plugin_activate() {
         'pop_font_colour' => '#ffffff',
         'pop_last_order_count' => 25,
         'sale_message' => '',
+        'debug_active' => false,
+        'custom_css' => '',
         'excluded_categories' => Array()
    );
     
