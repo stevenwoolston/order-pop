@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "gulp watch",
-    "ftp-deploy": "FTP_USER=wdwdnet-001 FTP_PASSWORD=H@nnahN0ah gulp remote-deploy"
+    "javascript": "gulp js",
+    "css": "gulp sass",
+    "build-assets": "npm run javascript && npm run css"
   },
   "repository": {
     "type": "git",

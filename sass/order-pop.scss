@@ -6,8 +6,7 @@
     left: 15px;
     width: 30vw;
     height: 15vh;
-    z-index: 10;
-    padding: 0 10px;
+    z-index: 9999999;
     color: #fff;
     box-shadow: 5px 5px 10px #777;
     transition: all 1s ease-in-out;
@@ -15,11 +14,7 @@
     line-height: 16px;
 
     @include media-breakpoint-down(lg) {
-        width: 60vw;
-    }
-
-    @include media-breakpoint-down(md) {
-        width: 80vw;
+        width: 65vw;
     }
 
     @include media-breakpoint-down(sm) {
@@ -34,20 +29,29 @@
         display: flex;
         align-items: stretch;
         height: 100%;
+        padding: 1vh 1vw;
+        position: relative;
+
+        @include media-breakpoint-down(md) {
+            padding: 2vh 2vw;
+        }
 
         .op-image {
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 0 2vw 0 0;
+            position: relative;
+
+            @include media-breakpoint-down(sm) {
+                max-width: 80px !important;
+            }
 
             > img {
-                max-width: 100px !important;
+                max-width: 100% !important;
                 height: auto;
                 width: 100px !important;
-
-                @include media-breakpoint-down(sm) {
-                    max-width: 80px !important;
-                }
+                position: relative;
             }
             
         }
@@ -78,38 +82,44 @@
         }
         
         .product-name {
-            font-size: 1.2em;
+            font-size: 1.2rem;
             font-kerning: auto;
         }
     }
 
     p, a {
         color: #fff;
+        font-size: 1rem;
     }
 
     button.close {
         position: absolute;
         right: 10px;
         top: -10px;
+        font-size: 2rem;
         color: #fff;
         border-width: 0;
+        z-index: 1;
 
         &:hover {
             border-width: 0;
 
             span {
-                font-size: 26px;
+                font-size: 2rem;
             }
         }
 
         span {
-            font-size: 26px;
+            font-size: 2rem;
         }
     }
 }
 
-.wp-admin .op-popper {
-    display: none;
+.wp-admin,
+.login.login-action-login {
+    .op-popper {
+        display: none;
+    }
 }
 
 
