@@ -17,115 +17,93 @@ function op_get_orders() {
 
     $op_options = get_option('op-plugin');
     if ($op_options['stop_notifications']) {
-        //	all categories are excluded
         die();
     }
     
-	$excluded_categories = $op_options['excluded_categories'] ? getExcludedCategories($op_options['excluded_categories']) : [];
-    $pop_last_order_count = $op_options['pop_last_order_count'];
-    // $initial_date = $op_options['order_query_start_date'] != '' ? $op_options['order_query_start_date'] : '0000-01-01';
-    // $final_date = $op_options['order_query_end_date'] != '' ? $op_options['order_query_end_date'] : date('Y-m-d');
-    $args = array(
-        'limit' => $pop_last_order_count,
-        'return' => 'ids',
-        'status' => 'completed',
-        'orderby' => 'date',
-        'order' => 'DESC',
-        'meta_query' => array(
-            'relation' => 'AND',
-            array(
-                'meta_key' => 'billing_first_name',
-                'meta_value' => '',
-                'meta_compare' => '!=',
-            ),
-            array(
-                'meta_key' => 'billing_last_name',
-                'meta_value' => '',
-                'meta_compare' => '!=',
-            )            
-        )
-        
-   );
+	$pop_last_order_count = $op_options['pop_last_order_count'];
+	// $initial_date = $op_options['order_query_start_date'] != '' ? $op_options['order_query_start_date'] : '0000-01-01';
+	// $final_date = $op_options['order_query_end_date'] != '' ? $op_options['order_query_end_date'] : date('Y-m-d');
+	$args = array(
+		'type' => 'shop_order',
+		'limit' => $pop_last_order_count,
+		'return' => 'ids',
+		'status' => 'completed',
+		'orderby' => 'date',
+		'order' => 'DESC',
+		'meta_query' => array(
+				'relation' => 'AND',
+				array(
+						'meta_key' => 'billing_first_name',
+						'meta_value' => '',
+						'meta_compare' => '!=',
+				),
+				array(
+						'meta_key' => 'billing_last_name',
+						'meta_value' => '',
+						'meta_compare' => '!=',
+				)            
+		)
+	);
 
-    $orders = wc_get_orders($args);
-	$order_id = $orders[array_rand($orders, 1)];
-	$order = wc_get_order($order_id);
-	if (!$order) {
+	$query = new WC_Order_Query($args);
+	$orders = $query->get_orders();
+	shuffle($orders);
+	$product = [];
+	foreach($orders as $order_id) {
+		if ($product) {
+			break;
+		}
+
+		$order = wc_get_order($order_id);
+		$order_products = $order->get_items();
+		
+		foreach($order_products as $order_product) {
+			$product_id = $order_product->get_product()->get_id();
+			if (!has_term(getExcludedCategories($op_options['excluded_categories']), 'product_cat', $product_id)) {
+				$product = $order_product->get_product();
+				break;
+			}
+		}
+	}
+
+	if (!$product) {
 		die();
 	}
 
-	$product = getQualifyingProduct($order, $excluded_categories);
-	if (empty($product)) {
-		die();
-	}
-
-    // $product = [];
-    // foreach($order->get_items() as $item_id => $item) {
-    //     $product = $item->get_product();
-    // }
-
-    $data  = $order->get_data(); // The Order data
-    $data['product'] = $product;
-    // $product_data = $item->get_product();
-
-    // $order_id        = $data['id'];
-    // $order_parent_id = $data['parent_id'];
-    $order_date_created = $data['date_created']->date('Y-m-d H:i:s');
-
-    //  get the product
-    $product_name = $product->get_name();
-    $product_url = $product->get_permalink();
-    $product_image = $product->get_image();
-    // $product_name = $product['title'];
-    // Get the Customer ID (User ID)
-    // $customer_id     = $data['customer_id'];
 	$category = get_term_by('id', $product->get_category_ids()[0], 'product_cat')->name;
 
-    ## BILLING INFORMATION:
-    $billing_first_name = $data['billing']['first_name'];
-    $billing_last_name  = $data['billing']['last_name'];
-    // $billing_email      = $data['billing']['email'];
-    // $billing_phone      = $data['billing']['phone'];
-    // $billing_company    = $data['billing']['company'];
-    // $billing_address_1  = $data['billing']['address_1'];
-    // $billing_address_2  = $data['billing']['address_2'];
-    $billing_city       = $data['billing']['city'];
-    $billing_state      = $data['billing']['state'];
-    // $billing_postcode   = $data['billing']['postcode'];
-    // $billing_country    = $data['billing']['country'];  
-
-    return
-        array (
-            'options' => array(
-                'interval' => $op_options['pop_interval_minutes'],
-                'sale_message' => $op_options['sale_message'],
-                'pop_background_colour' => $op_options['pop_background_colour'],
-                'pop_font_colour' => $op_options['pop_font_colour'],
-                'debugging_enabled' => $op_options['debug_active'],
-                // 'test' => $excluded_categories
-           ),
-            'order_date' => $order_date_created,
-            'customer' => array(
-                'first_name' => $billing_first_name,
-                'last_name' => $billing_last_name,
-                'city' => ucwords(strtolower($billing_city)),
-                'state' => $billing_state
-           ),
-            'product' => array(
-                'name' => $product_name,
-                'url' => $product_url,
-                'image' => $product_image,
-				'category' => $category,
-            ),
-            'debug' => $data
-       );
+	return
+			array (
+					'options' => array(
+							'interval' => $op_options['pop_interval_minutes'],
+							'sale_message' => $op_options['sale_message'],
+							'pop_background_colour' => $op_options['pop_background_colour'],
+							'pop_font_colour' => $op_options['pop_font_colour'],
+							'debugging_enabled' => $op_options['debug_active'],
+							'custom_css' => $op_options['custom_css'],
+							// 'test' => $excluded_categories
+					),
+					'order_date' => $order->get_date_completed()->date('Y-m-d H:i:s'),
+					'customer' => array(
+							'first_name' => $order->get_billing_first_name(),
+							'last_name'  => $order->get_billing_last_name(),	
+							'city'  => ucwords(strtolower($order->get_billing_city())),
+							'state'  => $order->get_billing_state(),
+					),
+					'product' => array(
+							'name' => $product->get_name(),
+							'url' => $product->get_permalink(),
+							'image' => $product->get_image(),
+							'category' => $category,
+					),
+			);
 }
 
 function getExcludedCategories($categories) {
     $excluded_categories = [];
     foreach($categories as $cat) {
         // $term = get_term_by('id', $cat, 'product_cat', 'ARRAY_A');
-        array_push($excluded_categories, get_term_by('id', $cat, 'product_cat', 'ARRAY_A')['name']);
+        array_push($excluded_categories, get_term_by('slug', $cat, 'product_cat', 'ARRAY_A')['slug']);
     }
     return $excluded_categories;		
 }

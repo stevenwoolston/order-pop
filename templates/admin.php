@@ -90,6 +90,7 @@
 
         <div id="tab-2" class="tab-pane">
             <h2>Configure customised CSS</h2>
+            <p>All selectors must be prefixed with the <code>.op-content-container</code> selector</p>
             <textarea name="op-plugin[custom_css]" class="form-control"
                 style="height: 50vh"><?php echo $options['custom_css']; ?></textarea>
         </div>
@@ -121,11 +122,12 @@
         foreach($product_categories as $key => $category) {
             $category_name = $category->name;
             $term_id = $category->term_id;
+            $term_slug = $category->slug;
             echo '<tr>';
             echo '<td class="text-center bg-light">';
             echo '<input name="op-plugin[excluded_categories][]" type="checkbox" ';
-            echo 'value="' .$term_id. '"';
-            echo (isset($options['excluded_categories']) && in_array($term_id, $options['excluded_categories']) ? 'checked="checked"' : ''). '/></td>';
+            echo 'value="' .$term_slug. '"';
+            echo (isset($options['excluded_categories']) && in_array($term_slug, $options['excluded_categories']) ? 'checked="checked"' : ''). '/></td>';
             echo '<td>' .$category_name. '</td>';
             echo '</tr>';
         }
