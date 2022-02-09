@@ -90,7 +90,7 @@
 
         <div id="tab-2" class="tab-pane">
             <h2>Configure customised CSS</h2>
-            <p>All selectors must be prefixed with the <code>.op-content-container</code> selector</p>
+            <p>All selectors must be prefixed with the <code>.op-popper</code> selector to ensure scope.</p>
             <textarea name="op-plugin[custom_css]" class="form-control"
                 style="height: 50vh"><?php echo $options['custom_css']; ?></textarea>
         </div>
