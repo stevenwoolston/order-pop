@@ -60,7 +60,7 @@ function op_get_orders() {
 		foreach($order_products as $order_product) {
 			$product_id = $order_product->get_product()->get_id();
 			if (!has_term(getExcludedCategories($op_options['excluded_categories']), 'product_cat', $product_id)) {
-				$product = $order_product->get_product();
+				$product = getProductFromOrderItem($order_product);
 				break;
 			}
 		}
@@ -120,9 +120,9 @@ function getQualifyingProduct($order, $excluded_categories) {
     return $matchFound ? $product : null;
 }
 
-function getProductFromOrderItem($item) {
-    if ($item->get_product()->get_parent_id() == 0) {
-        return $item->get_product();
+function getProductFromOrderItem($order_item) {
+    if ($order_item->get_product()->get_parent_id() == 0) {
+        return $order_item->get_product();
     }
-    return wc_get_product($item->get_product()->get_parent_id());
+    return wc_get_product($order_item->get_product()->get_parent_id());
 }
