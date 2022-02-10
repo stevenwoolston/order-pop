@@ -21,7 +21,7 @@
                     </th>
                     <td>
                         <input name="op-plugin[stop_notifications]" type="checkbox" class="form-control"
-                            <?php echo ($options['stop_notifications'] ? ' checked="checked" ' : '') ?>
+                            <?php echo (array_key_exists('stop_notifications', $options) ? ' checked="checked" ' : '') ?>
                             value="1" />
                     </td>
                 </tr>
@@ -80,7 +80,7 @@
                     <td>
                         <div class="w-25">
                             <input name="op-plugin[debug_active]" type="checkbox" class="form-control"
-                                <?php echo ($options['debug_active'] ? ' checked="checked" ' : '') ?>
+                                <?php echo (array_key_exists('debug_active', $options) ? ' checked="checked" ' : '') ?>
                                 value="1" />
                         </div>
                     </td>
