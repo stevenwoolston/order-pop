@@ -17,10 +17,12 @@ function op_plugin_activate() {
 
     $default_options = array(
         'stop_notifications' => false,
-        'pop_interval_minutes' => 5,
+        'pop_interval_between_pop_refresh_seconds' => 10,
+        'pop_interval_between_pops_after_dismissed_minutes' => 1440,
         'pop_background_colour' => '#15bbd1',
         'pop_font_colour' => '#ffffff',
         'pop_last_order_count' => 25,
+        'anonomise_customer' => false,
         'sale_message' => '',
         'debug_active' => false,
         'custom_css' => get_default_css(),

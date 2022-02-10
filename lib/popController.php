@@ -15,10 +15,10 @@ function op_get_order() {
 
 function op_get_orders() {
 
-    $op_options = get_option('op-plugin');
-    if ($op_options['stop_notifications']) {
-        die();
-    }
+	$op_options = get_option('op-plugin');
+	if ($op_options['stop_notifications']) {
+			die();
+	}
     
 	$pop_last_order_count = $op_options['pop_last_order_count'];
 	// $initial_date = $op_options['order_query_start_date'] != '' ? $op_options['order_query_start_date'] : '0000-01-01';
@@ -45,8 +45,14 @@ function op_get_orders() {
 		)
 	);
 
-	$query = new WC_Order_Query($args);
-	$orders = $query->get_orders();
+	$orders = get_transient('order_pop_cached_orders');
+
+	if (false == $orders) {
+		$query = new WC_Order_Query($args);
+		$orders = $query->get_orders();
+		set_transient('order_pop_cached_orders', $orders, 10 * MINUTE_IN_SECONDS);
+	}
+	
 	shuffle($orders);
 	$product = [];
 	foreach($orders as $order_id) {
@@ -75,7 +81,8 @@ function op_get_orders() {
 	return
 			array (
 					'options' => array(
-							'interval' => $op_options['pop_interval_minutes'],
+							'pop_interval_between_pop_refresh_seconds' => $op_options['pop_interval_between_pop_refresh_seconds'],
+							'pop_interval_between_pops_after_dismissed_minutes' => $op_options['pop_interval_between_pops_after_dismissed_minutes'],
 							'sale_message' => $op_options['sale_message'],
 							'pop_background_colour' => $op_options['pop_background_colour'],
 							'pop_font_colour' => $op_options['pop_font_colour'],
@@ -85,8 +92,8 @@ function op_get_orders() {
 					),
 					'order_date' => $order->get_date_completed()->date('Y-m-d H:i:s'),
 					'customer' => array(
-							'first_name' => $order->get_billing_first_name(),
-							'last_name'  => $order->get_billing_last_name(),	
+							'first_name' => (array_key_exists('anonomise_customer', $op_options) ? 'Someone ' : $order->get_billing_first_name()),
+							'last_name'  => (array_key_exists('anonomise_customer', $op_options) ? '' : $order->get_billing_last_name()),
 							'city'  => ucwords(strtolower($order->get_billing_city())),
 							'state'  => $order->get_billing_state(),
 					),
