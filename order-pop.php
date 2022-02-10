@@ -1,14 +1,14 @@
 <?php
 /*
 @package OP_Developer
-@version 0.1.0
+@version 1.0
 Plugin Name: Order Pop
-Plugin URI: https://github.com/stevenwoolston/order-pop
+Plugin URI: https://github.com/startsat60/order-pop
 Description: Woocommerce Order Pop Notification. Display previous orders to your customers to promote sales.
-Version: 0.1
+Version: 1.0
 Author: Woolston Web Design
 Author URI: https://www.woolston.com.au
-GitHub Plugin URI: https://github.com/stevenwoolston/order-pop
+GitHub Plugin URI: https://github.com/startsat60/order-pop
 */
 
 if (!defined('ABSPATH')) {
