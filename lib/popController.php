@@ -83,6 +83,7 @@ function op_get_orders() {
 				'pop_font_colour' => $op_options['pop_font_colour'],
 				'debugging_enabled' => $op_options['debug_active'],
 				'custom_css' => $op_options['custom_css'],
+				'utm_code' => $op_options['utm_code'],
 				// 'test' => $excluded_categories
 			),
 			'order_date' => $order->get_date_completed()->date('Y-m-d H:i:s'),
@@ -130,7 +131,7 @@ function getProductFromOrderItem($item) {
 
 	return array(
 		'name' => $product->get_name(),
-		'slug' => $product->get_slug(),
+		'url' => $product->get_permalink(),
 		'image' => $product->get_image(),
 	);
 }

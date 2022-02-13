@@ -27,47 +27,6 @@
                 </tr>
                 <tr>
                     <th scope="row">
-                        <label for="op-plugin[pop_interval_between_pop_refresh_seconds]">
-                            Interval (seconds) between pop product refresh:
-                        </label>
-                    </th>
-                    <td>
-                        <div class="w-25">
-                            <input name="op-plugin[pop_interval_between_pop_refresh_seconds]" type="number"
-                                class="form-control"
-                                value="<?php echo ($options['pop_interval_between_pop_refresh_seconds']) ?>"> seconds
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">
-                        <label for="op-plugin[pop_interval_between_pops_after_dismissed_minutes]">
-                            Interval (minutes) before pop resumes after being dismissed:<br />
-                            <small>The customer can dismiss the pop will not be displayed again until after this interval elapses (or the customer clears their browser cache).</small>
-                        </label>
-                    </th>
-                    <td>
-                        <div class="w-25">
-                            <input name="op-plugin[pop_interval_between_pops_after_dismissed_minutes]" type="number"
-                                class="form-control"
-                                value="<?php echo ($options['pop_interval_between_pops_after_dismissed_minutes']) ?>"> minutes
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">
-                        <label for="op-plugin[pop_last_order_count]">Last orders to pop:</label>
-                    </th>
-                    <td>
-                        <div class="w-25">
-                            <input name="op-plugin[pop_last_order_count]" type="number"
-                                class="form-control"
-                                value="<?php echo ($options['pop_last_order_count']) ?>">
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">
                         <label for="op-plugin[pop_background_colour]">Pop background colour:</label>
                     </th>
                     <td>
@@ -92,9 +51,51 @@
                 </tr>
                 <tr>
                     <th scope="row">
+                        <label for="op-plugin[pop_last_order_count]">Last orders to pop:</label>
+                    </th>
+                    <td>
+                        <div class="w-25">
+                            <input name="op-plugin[pop_last_order_count]" type="number"
+                                class="form-control"
+                                value="<?php echo ($options['pop_last_order_count']) ?>">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="op-plugin[pop_interval_between_pop_refresh_seconds]">
+                            Interval (seconds) between pop product refresh:<br />
+                            <small>Product details are displayed for this amount of time before the next random product is displayed.</small>
+                        </label>
+                    </th>
+                    <td>
+                        <div class="w-25">
+                            <input name="op-plugin[pop_interval_between_pop_refresh_seconds]" type="number"
+                                class="form-control"
+                                value="<?php echo ($options['pop_interval_between_pop_refresh_seconds']) ?>">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="op-plugin[pop_interval_between_pops_after_dismissed_minutes]">
+                            Interval (minutes) before pop resumes after being dismissed:<br />
+                            <small>The customer can dismiss and the pop will not be displayed again until after this interval elapses (or the customer clears their browser cache).</small>
+                        </label>
+                    </th>
+                    <td>
+                        <div class="w-25">
+                            <input name="op-plugin[pop_interval_between_pops_after_dismissed_minutes]" type="number"
+                                class="form-control"
+                                value="<?php echo ($options['pop_interval_between_pops_after_dismissed_minutes']) ?>">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
                         <label for="op-plugin[anonomise_customer]">
                             Anonomise Customer Name: <br>
-                            <small>(will use: 'Someone' instead of customer name)</small>
+                            <small>(will use: 'Someone' instead of customer information)</small>
                         </label>
                     </th>
                     <td>
@@ -102,6 +103,21 @@
                             <input name="op-plugin[anonomise_customer]" type="checkbox" class="form-control"
                                 <?php echo (array_key_exists('anonomise_customer', $options) ? ' checked="checked" ' : '') ?>
                                 value="1" />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="op-plugin[utm_code]">
+                            UTM Code: <br>
+                            <small>This text will be appended to the product URL.</small>
+                        </label>
+                    </th>
+                    <td>
+                        <div style="width: 75%;">
+                            <input name="op-plugin[utm_code]" type="text"
+                                class="form-control" style="width: 100%;"
+                                value="<?php echo ($options['utm_code']) ?>">
                         </div>
                     </td>
                 </tr>

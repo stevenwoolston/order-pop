@@ -26,6 +26,7 @@ function op_plugin_activate() {
         'sale_message' => '',
         'debug_active' => false,
         'custom_css' => get_default_css(),
+        'utm_code' => '',
         'excluded_categories' => Array()
    );
     
@@ -41,16 +42,7 @@ function op_plugin_activate() {
 
 function get_default_css() {
     return (get_option('op-plugin')['custom_css']) ?
-        get_option('op-plugin')['custom_css'] :
-        `.op-popper { border: 1px solid #aba9a9; border-radius: 10px; }
-        .op-popper button.close { top: 0; right: 20px; color: #5D1FF0; }
-        .op-popper .op-content { padding: 1vw 0 1vw; }
-        .op-popper .op-content .meta { font-size: 12px; }
-        .op-popper .op-content p { padding: 0 0 10px 0; }
-        .op-popper p.customer-details { font-size: 15px; }
-        .op-popper .product-name { color: #5D1FF0 !important; font-weight: 600; font-size: 18px; }
-        .op-popper .op-content .meta a { font-size: 13px; text-decoration: underline; }
-        .op-popper .op-content-container .op-image { padding: 0 5px 0 0; }`;
+        get_option('op-plugin')['custom_css'] : ``;
 }
 function op_plugin_deactivate() {
   

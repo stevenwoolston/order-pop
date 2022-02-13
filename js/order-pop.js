@@ -103,6 +103,7 @@ jQuery(document).ready( function() {
 
 			var fontColour = data.options.pop_font_colour,
 				refreshInterval = parseInt(data.options.pop_interval_between_pop_refresh_seconds)*1000,
+				utmCode = data.options.utm_code,
 				formattedDate = buildDate(data['order_date']),
 				customerFirstName = data.customer.first_name,
 				customerLastName = data.customer.last_name.charAt(0),
@@ -117,9 +118,11 @@ jQuery(document).ready( function() {
 						<span class="orderdate meta" style="color: ${fontColour}">${formattedDate}</span>
 						<p class="customer-details pt-0" style="color: ${fontColour}">${customerFirstName} ${customerLastName} 
 								from ${customerCity}, ${customerState} bought ...</p>
-						<p class="product-name" style="color: ${fontColour}">${productName}</p>
+						<p class="product-name" style="color: ${fontColour}">
+							<a href="${productUrl}${utmCode}">${productName}</a>
+						</p>
 						<span class="meta" style="color: ${fontColour}">
-								<a href="${productUrl}" style="color: ${fontColour}">Click here to view</a>
+								<a href="${productUrl}${utmCode}" style="color: ${fontColour}">Click here to view</a>
 						</span>
 				</div>
 				<div class="op-image">${productImage}</div>

@@ -104,7 +104,7 @@
             }
         }
         
-        .product-name {
+        .product-name a {
             color: #5D1FF0 !important; 
             font-weight: 600; 
             font-size: 18px;
@@ -112,6 +112,11 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            text-decoration: none;    
+
+            &:hover {
+                text-decoration: underline;
+            }
         }
     }
 
