@@ -12,6 +12,8 @@
     transition: all 1s ease-in-out;
     font-size: 16px;
     line-height: 16px;
+    border: 1px solid #aba9a9; 
+    border-radius: 10px;
 
     @include media-breakpoint-down(lg) {
         width: 65vw;
@@ -25,6 +27,10 @@
         padding: 0 0 0 5px;
     }
 
+    p.customer-details { 
+        font-size: 15px;
+    }
+
     .op-content-container {
         display: flex;
         align-items: stretch;
@@ -36,11 +42,24 @@
             padding: 2vh 2vw;
         }
 
+        .op-content-wrapper {
+            display: flex;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+
+            &.refreshing {
+                opacity: 0;
+            }
+        }
+
         .op-image {
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 0 2vw 0 0;
+            padding: 0 5px 0 0;
             position: relative;
 
             @include media-breakpoint-down(sm) {
@@ -55,13 +74,12 @@
             }
             
         }
-                
     }
 
     .op-content {
         display: flex;
         flex-direction: column;
-        padding: 2vh 1vw;
+        padding: 1vw 0 1vw;
         flex: 1 1 auto;
         justify-content: center;
         font-kerning: auto;
@@ -77,13 +95,23 @@
         }
 
         .meta {
-            font-size: 0.8em;
+            font-size: 12px;
             font-kerning: auto;
+
+            a {
+                font-size: 13px; 
+                text-decoration: underline;
+            }
         }
         
         .product-name {
-            font-size: 1.2rem;
+            color: #5D1FF0 !important; 
+            font-weight: 600; 
+            font-size: 18px;
             font-kerning: auto;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
     }
 
@@ -92,12 +120,12 @@
         font-size: 1rem;
     }
 
-    button.close {
+    button.close {        
         position: absolute;
-        right: 10px;
-        top: -10px;
+        top: 0; 
+        right: 20px;
         font-size: 2rem;
-        color: #fff;
+        color: #5D1FF0;
         border-width: 0;
         z-index: 1;
 

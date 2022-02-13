@@ -1,11 +1,11 @@
 <?php
 /*
 @package OP_Developer
-@version 1.0
+@version 1.1
 Plugin Name: Order Pop
 Plugin URI: https://github.com/startsat60/order-pop
 Description: Woocommerce Order Pop Notification. Display previous orders to your customers to promote sales.
-Version: 1.0
+Version: 1.1
 Author: Woolston Web Design
 Author URI: https://www.woolston.com.au
 GitHub Plugin URI: https://github.com/startsat60/order-pop
@@ -35,7 +35,7 @@ register_deactivation_hook(__FILE__, 'op_deactivation_hook');
 register_uninstall_hook(__FILE__, 'op_uninstall_hook');
 
 function op_enqueue_assets() {
-    wp_enqueue_style('op-style', plugin_dir_url(__FILE__) . '/dist/css/order-pop.min.css', array(), '1.0', 'all');
+    wp_enqueue_style('op-style', plugin_dir_url(__FILE__) . '/dist/css/order-pop.min.css', array(), '1.1', 'all');
 
     $op_options = get_option('op-plugin')['custom_css'];
     if (isset($op_options)) {

@@ -9,8 +9,8 @@ add_action("wp_ajax_op_get_order", "op_get_order");
 add_action("wp_ajax_nopriv_op_get_order", "op_get_order");    
 
 function op_get_order() {
-    echo json_encode(op_get_orders());
-    die();
+	echo json_encode(op_get_orders());
+	die();
 }
 
 function op_get_orders() {
@@ -54,82 +54,83 @@ function op_get_orders() {
 	}
 	
 	shuffle($orders);
-	$product = [];
+	$qualifying_products = [];
+	$options_excluded_categories = $op_options['excluded_categories'];
 	foreach($orders as $order_id) {
-		if ($product) {
-			break;
-		}
 
 		$order = wc_get_order($order_id);
 		$order_products = $order->get_items();
 		
 		foreach($order_products as $order_product) {
 			$product_id = $order_product->get_product()->get_id();
-			if (!has_term(getExcludedCategories($op_options['excluded_categories']), 'product_cat', $product_id)) {
-				$product = getProductFromOrderItem($order_product);
-				break;
+			if (!$options_excluded_categories || !has_term(getExcludedCategories($options_excluded_categories), 'product_cat', $product_id)) {
+				$qualifying_products[] = getProductFromOrderItem($order_product);
 			}
 		}
 	}
 
-	if (!$product) {
+	if (!$qualifying_products) {
 		die();
 	}
 
-	$category = get_term_by('id', $product->get_category_ids()[0], 'product_cat')->name;
-
 	return
-			array (
-					'options' => array(
-							'pop_interval_between_pop_refresh_seconds' => $op_options['pop_interval_between_pop_refresh_seconds'],
-							'pop_interval_between_pops_after_dismissed_minutes' => $op_options['pop_interval_between_pops_after_dismissed_minutes'],
-							'sale_message' => $op_options['sale_message'],
-							'pop_background_colour' => $op_options['pop_background_colour'],
-							'pop_font_colour' => $op_options['pop_font_colour'],
-							'debugging_enabled' => $op_options['debug_active'],
-							'custom_css' => $op_options['custom_css'],
-							// 'test' => $excluded_categories
-					),
-					'order_date' => $order->get_date_completed()->date('Y-m-d H:i:s'),
-					'customer' => array(
-							'first_name' => (array_key_exists('anonomise_customer', $op_options) ? 'Someone ' : $order->get_billing_first_name()),
-							'last_name'  => (array_key_exists('anonomise_customer', $op_options) ? '' : $order->get_billing_last_name()),
-							'city'  => ucwords(strtolower($order->get_billing_city())),
-							'state'  => $order->get_billing_state(),
-					),
-					'product' => array(
-							'name' => $product->get_name(),
-							'url' => $product->get_permalink(),
-							'image' => $product->get_image(),
-							'category' => $category,
-					),
-			);
+		array (
+			'options' => array(
+				'pop_interval_between_pop_refresh_seconds' => $op_options['pop_interval_between_pop_refresh_seconds'],
+				'pop_interval_between_pops_after_dismissed_minutes' => $op_options['pop_interval_between_pops_after_dismissed_minutes'],
+				'sale_message' => $op_options['sale_message'],
+				'pop_background_colour' => $op_options['pop_background_colour'],
+				'pop_font_colour' => $op_options['pop_font_colour'],
+				'debugging_enabled' => $op_options['debug_active'],
+				'custom_css' => $op_options['custom_css'],
+				// 'test' => $excluded_categories
+			),
+			'order_date' => $order->get_date_completed()->date('Y-m-d H:i:s'),
+			'customer' => array(
+				'first_name' => (array_key_exists('anonomise_customer', $op_options) ? 'Someone ' : $order->get_billing_first_name()),
+				'last_name'  => (array_key_exists('anonomise_customer', $op_options) ? '' : $order->get_billing_last_name()),
+				'city'  => ucwords(strtolower($order->get_billing_city())),
+				'state'  => $order->get_billing_state(),
+			),
+			'products' => $qualifying_products,
+		);
 }
 
 function getExcludedCategories($categories) {
-    $excluded_categories = [];
-    foreach($categories as $cat) {
-        // $term = get_term_by('id', $cat, 'product_cat', 'ARRAY_A');
-        array_push($excluded_categories, get_term_by('slug', $cat, 'product_cat', 'ARRAY_A')['slug']);
-    }
-    return $excluded_categories;		
+	$excluded_categories = [];
+	if (!isset($categories)) {
+		return $excluded_categories;
+	}
+
+	foreach($categories as $cat) {
+		// $term = get_term_by('id', $cat, 'product_cat', 'ARRAY_A');
+		array_push($excluded_categories, get_term_by('slug', $cat, 'product_cat', 'ARRAY_A')['slug']);
+	}
+	return $excluded_categories;		
 }
 
-function getQualifyingProduct($order, $excluded_categories) {
-    $matchFound = false;
-    foreach($order->get_items() as $item_id => $item) {
-        $product = getProductFromOrderItem($item);
-        if (!$excluded_categories || !has_term($excluded_categories, 'product_cat', $product->get_id())) {
-            $matchFound = true;
-            break;
-        }
-    }
-    return $matchFound ? $product : null;
-}
+// function getQualifyingProduct($order, $excluded_categories) {
+// 	$matchFound = false;
+// 	foreach($order->get_items() as $item_id => $item) {
+// 		$product = getProductFromOrderItem($item);
+// 		if (!$excluded_categories || !has_term($excluded_categories, 'product_cat', $product->get_id())) {
+// 			$matchFound = true;
+// 			break;
+// 		}
+// 	}
+// 	return $matchFound ? $product : null;
+// }
 
 function getProductFromOrderItem($item) {
-    if ($item->get_product()->get_parent_id() == 0) {
-        return $item->get_product();
-    }
-    return wc_get_product($item->get_product()->get_parent_id());
+	if ($item->get_product()->get_parent_id() == 0) {
+		$product = $item->get_product();
+	} else {
+		$product = wc_get_product($item->get_product()->get_parent_id());
+	}
+
+	return array(
+		'name' => $product->get_name(),
+		'slug' => $product->get_slug(),
+		'image' => $product->get_image(),
+	);
 }

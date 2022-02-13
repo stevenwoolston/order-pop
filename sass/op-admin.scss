@@ -124,18 +124,6 @@ form {
     min-width: 100px;
 }
 
-table.op-admin {
-    background-color: #ddd;
-}
-
-table.op-admin th {
-    background-color: #aaa;
-}
-
-table.op-admin tbody tr:nth-child(even) {
-    background-color: #ccc;
-}
-
-table.op-admin th, table.op-admin td {
-    padding: 5px 10px;
+table.form-table th {
+    width: 20vw;
 }
