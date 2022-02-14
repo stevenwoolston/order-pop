@@ -124,6 +124,27 @@ form {
     min-width: 100px;
 }
 
-table.form-table th {
-    width: 20vw;
+table.form-table {
+
+    th { width: 30%; }
+
+    td {
+        width: 75%;
+
+        input[type=text], input[type=number], input[type=color], textarea {
+            width: 25%;
+        }
+    }    
+}
+
+@media (max-width: 768px) {
+    table.form-table {
+        th, td { width: 100%; }
+
+        td {
+            input[type=text], input[type=number], input[type=color], textarea {
+                width: 100%;
+            }
+        }    
+    }
 }

@@ -30,7 +30,7 @@
                         <label for="op-plugin[pop_background_colour]">Pop background colour:</label>
                     </th>
                     <td>
-                        <div class="w-25">
+                        <div>
                             <input name="op-plugin[pop_background_colour]" type="color"
                                 class="form-control"
                                 value="<?php echo ($options['pop_background_colour']) ?>">
@@ -42,7 +42,7 @@
                         <label for="op-plugin[pop_font_colour]">Pop text colour:</label>
                     </th>
                     <td>
-                        <div class="w-25">
+                        <div>
                             <input name="op-plugin[pop_font_colour]" type="color"
                                 class="form-control"
                                 value="<?php echo ($options['pop_font_colour']) ?>">
@@ -54,7 +54,7 @@
                         <label for="op-plugin[pop_last_order_count]">Last orders to pop:</label>
                     </th>
                     <td>
-                        <div class="w-25">
+                        <div>
                             <input name="op-plugin[pop_last_order_count]" type="number"
                                 class="form-control"
                                 value="<?php echo ($options['pop_last_order_count']) ?>">
@@ -69,7 +69,7 @@
                         </label>
                     </th>
                     <td>
-                        <div class="w-25">
+                        <div>
                             <input name="op-plugin[pop_interval_between_pop_refresh_seconds]" type="number"
                                 class="form-control"
                                 value="<?php echo ($options['pop_interval_between_pop_refresh_seconds']) ?>">
@@ -84,7 +84,7 @@
                         </label>
                     </th>
                     <td>
-                        <div class="w-25">
+                        <div>
                             <input name="op-plugin[pop_interval_between_pops_after_dismissed_minutes]" type="number"
                                 class="form-control"
                                 value="<?php echo ($options['pop_interval_between_pops_after_dismissed_minutes']) ?>">
@@ -99,7 +99,7 @@
                         </label>
                     </th>
                     <td>
-                        <div class="w-25">
+                        <div>
                             <input name="op-plugin[anonomise_customer]" type="checkbox" class="form-control"
                                 <?php echo (array_key_exists('anonomise_customer', $options) ? ' checked="checked" ' : '') ?>
                                 value="1" />
@@ -114,7 +114,7 @@
                         </label>
                     </th>
                     <td>
-                        <div style="width: 75%;">
+                        <div>
                             <input name="op-plugin[utm_code]" type="text"
                                 class="form-control" style="width: 100%;"
                                 value="<?php echo ($options['utm_code']) ?>">
@@ -126,7 +126,7 @@
                         <label for="op-plugin[debug_active]">Enable debugging:</label>
                     </th>
                     <td>
-                        <div class="w-25">
+                        <div>
                             <input name="op-plugin[debug_active]" type="checkbox" class="form-control"
                                 <?php echo (array_key_exists('debug_active', $options) ? ' checked="checked" ' : '') ?>
                                 value="1" />
