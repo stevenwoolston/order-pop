@@ -71,8 +71,9 @@
                 height: auto;
                 width: 100px !important;
                 position: relative;
+                max-height: 80%;
+                width: 100px;
             }
-            
         }
     }
 
@@ -104,18 +105,24 @@
             }
         }
         
-        .product-name a {
-            color: #5D1FF0 !important; 
-            font-weight: 600; 
-            font-size: 18px;
-            font-kerning: auto;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            text-decoration: none;    
+        .product-name {
+            width: 400px;
 
-            &:hover {
-                text-decoration: underline;
+            a {
+                color: #5D1FF0 !important; 
+                font-weight: 600; 
+                font-size: 18px;
+                font-kerning: auto;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                text-decoration: none;    
+                display: block; 
+                padding: 5px 0;
+
+                &:hover {
+                    text-decoration: underline;
+                }
             }
         }
     }
@@ -155,7 +162,10 @@
     }
 }
 
-
+@media only screen and (max-width: 595px) {
+    .op-popper .product-name { width: 300px; }
+    .op-popper .op-image img { width: 80px; }
+}
 
 /* Breakpoints */
 // @include media-breakpoint-down(lg) { body { background-color: orange !important; } }
