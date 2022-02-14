@@ -41,7 +41,7 @@ function op_enqueue_assets() {
     if (isset($op_options)) {
         wp_add_inline_style('op-style', $op_options);
     }
-    wp_register_script('momentjs', plugin_dir_url(__FILE__) . '/dist/js/moment-with-locales.min.js', array('jquery'));
+    wp_register_script('momentjs', plugin_dir_url(__FILE__) . '/js/moment-with-locales.min.js', array('jquery'));
     wp_register_script('op_order_script', plugin_dir_url(__FILE__) . '/dist/js/order-pop.min.js', array('jquery', 'momentjs'), '1.0');
     wp_localize_script('op_order_script', 'myAjax', array('ajaxurl' => admin_url('admin-ajax.php')));
     wp_enqueue_script('jquery');
@@ -55,7 +55,7 @@ function op_admin_enqueue_assets() {
 
     //Enqueue CSS just for us
     if (isset($_GET['page']) && $_GET['page'] == 'op_plugin') {
-        wp_enqueue_style('op-bootstrap', plugin_dir_url(__FILE__) . '/dist/css/bootstrap.min.css');
+        wp_enqueue_style('op-bootstrap', plugin_dir_url(__FILE__) . '/css/bootstrap.min.css');
     }    
 }
 
