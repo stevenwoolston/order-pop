@@ -16,7 +16,7 @@ function op_plugin_activate() {
     }
 
     $default_options = array(
-        'stop_notifications' => false,
+        'stop_notifications' => true,
         'pop_interval_between_pop_refresh_seconds' => 10,
         'pop_interval_between_pops_after_dismissed_minutes' => 1440,
         'pop_background_colour' => '#15bbd1',
