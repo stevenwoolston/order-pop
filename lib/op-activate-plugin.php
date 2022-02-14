@@ -30,14 +30,8 @@ function op_plugin_activate() {
         'excluded_categories' => Array()
    );
     
-    // $op_options = get_option('op_plugin');
-    // $new_options = $default_options + (is_array($op_options) ? $op_options : array());
     update_option('op-plugin', $default_options);
     flush_rewrite_rules();
-    
-    // if (!get_option('op-plugin')) {
-    //     update_option('op-plugin', $defaultOptions);
-    // }
 }
 
 function get_default_css() {
@@ -51,7 +45,6 @@ function op_plugin_deactivate() {
     }
 
     flush_rewrite_rules();
-
 }
 
 function op_plugin_uninstall() {
