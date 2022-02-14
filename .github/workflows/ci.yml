@@ -26,3 +26,9 @@ jobs:
       run: |
         npm install
         npm run build-assets
+        cd ./dist/css
+        git add .
+        cd ../js
+        git add .
+        git commit -am "Commiting assets built by gulp"
+
