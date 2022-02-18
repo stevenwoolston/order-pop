@@ -63,8 +63,18 @@ function op_get_orders() {
 		
 		foreach($order_products as $order_product) {
 			$product_id = $order_product->get_product()->get_id();
-			if (!$options_excluded_categories || !has_term(getExcludedCategories($options_excluded_categories), 'product_cat', $product_id)) {
-				$qualifying_products[] = getProductFromOrderItem($order_product);
+			if (!$options_excluded_categories || 
+				!has_term(getExcludedCategories($options_excluded_categories), 'product_cat', $product_id)) {
+				$qualifying_products[] = array_merge(
+					array(
+						'order_date' => $order->get_date_completed()->date('Y-m-d H:i:s'),
+						'order_first_name' => (array_key_exists('anonomise_customer', $op_options) ? 'Someone ' : $order->get_billing_first_name()),
+						'order_last_name'  => (array_key_exists('anonomise_customer', $op_options) ? '' : $order->get_billing_last_name()),
+						'order_city'  => ucwords(strtolower($order->get_billing_city())),
+						'order_state'  => $order->get_billing_state()
+					),
+					getProductFromOrderItem($order_product)
+				);
 			}
 		}
 	}
@@ -72,6 +82,8 @@ function op_get_orders() {
 	if (!$qualifying_products) {
 		die();
 	}
+
+	shuffle($qualifying_products);
 
 	return
 		array (
@@ -84,13 +96,6 @@ function op_get_orders() {
 				'custom_css' => $op_options['custom_css'],
 				'utm_code' => $op_options['utm_code'],
 				// 'test' => $excluded_categories
-			),
-			'order_date' => $order->get_date_completed()->date('Y-m-d H:i:s'),
-			'customer' => array(
-				'first_name' => (array_key_exists('anonomise_customer', $op_options) ? 'Someone ' : $order->get_billing_first_name()),
-				'last_name'  => (array_key_exists('anonomise_customer', $op_options) ? '' : $order->get_billing_last_name()),
-				'city'  => ucwords(strtolower($order->get_billing_city())),
-				'state'  => $order->get_billing_state(),
 			),
 			'products' => $qualifying_products,
 		);
