@@ -16,7 +16,7 @@ function op_get_order() {
 function op_get_orders() {
 
 	$op_options = get_option('op-plugin');
-	if ($op_options['stop_notifications']) {
+	if (array_key_exists('stop_notifications', $op_options) && $op_options['stop_notifications']) {
 			die();
 	}
     
@@ -78,10 +78,9 @@ function op_get_orders() {
 			'options' => array(
 				'pop_interval_between_pop_refresh_seconds' => $op_options['pop_interval_between_pop_refresh_seconds'],
 				'pop_interval_between_pops_after_dismissed_minutes' => $op_options['pop_interval_between_pops_after_dismissed_minutes'],
-				'sale_message' => $op_options['sale_message'],
 				'pop_background_colour' => $op_options['pop_background_colour'],
 				'pop_font_colour' => $op_options['pop_font_colour'],
-				'debugging_enabled' => $op_options['debug_active'],
+				'debug_active' => $op_options['debug_active'],
 				'custom_css' => $op_options['custom_css'],
 				'utm_code' => $op_options['utm_code'],
 				// 'test' => $excluded_categories
@@ -134,4 +133,12 @@ function getProductFromOrderItem($item) {
 		'url' => $product->get_permalink(),
 		'image' => $product->get_image(),
 	);
+}
+
+function cleanUp() {
+	$op_options = get_option('op-plugin');
+
+	if (array_key_exists('sale_message', $op_options)) {
+		unset($op_options['sale_message']);
+	}
 }

@@ -1,6 +1,6 @@
 jQuery(document).ready( function() {
 
-	var debugging_enabled = false;
+	var debug_active = false;
 
     jQuery.ajax({
         type : "post",
@@ -33,8 +33,8 @@ jQuery(document).ready( function() {
 
 				orderPopData.dismissInterval = dismissInterval;
 				localStorage.setItem('order_pop', JSON.stringify(orderPopData));
-				debugging_enabled = data.options.debugging_enabled;
-				if (debugging_enabled) {
+				debug_active = data.options.debug_active;
+				if (debug_active) {
 					console.log('set local storage', orderPopData);
 				}
         return data;
@@ -45,7 +45,7 @@ jQuery(document).ready( function() {
 				orderPopData = JSON.parse(orderPop);
 
 			if (orderPopData.dismissedUntil && moment.duration(moment().utc().diff(orderPopData.dismissedUntil)).asMinutes() < 0) {
-				if (debugging_enabled) {
+				if (debug_active) {
 					console.log(moment.duration(moment().utc().diff(orderPopData.dismissedUntil)).asMinutes());
 				}
 				//	just keep looping until dismiss date reached - not hitting the db so minimal perf
@@ -91,7 +91,7 @@ jQuery(document).ready( function() {
 
 			refreshPop(data, 0);
 
-			if (debugging_enabled) {
+			if (debug_active) {
 					console.log(data);
 			}
     }
@@ -139,7 +139,7 @@ jQuery(document).ready( function() {
 			}
 
 			setTimeout(function() {
-				if (debugging_enabled) {
+				if (debug_active) {
 					console.log(`Refreshing....${new Date()}`, data.products[productIndex]['name']);
 				}
 				productIndex++;
@@ -180,7 +180,7 @@ jQuery(document).ready( function() {
 			orderPopData.dismissedUntil = moment().add(dismissInterval, "minutes");
 			localStorage.setItem('order_pop', JSON.stringify(orderPopData));
 
-			if (debugging_enabled) {
+			if (debug_active) {
 				console.log('dismissed', JSON.parse(orderPop));
 			}
 			document.querySelector('.op-popper').style.left = '-999px';
