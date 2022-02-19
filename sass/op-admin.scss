@@ -1,141 +1,154 @@
-* {
-    box-sizing: border-box;
-}
+.wrap.op-plugin-options {
 
-form {
-    display: block;
-    padding: 0;
-    margin: 0;
-}
+	* {
+		box-sizing: border-box;
+	}
+	
+	form {
+		display: block;
+		padding: 0;
+		margin: 0;
+	}
+	
+	.op-plugin-options a {
+		outline: 0 !important;
+	}
+	
+	.op-nav-tab-wrapper > img {
+		height: 30px;
+		width: auto;
+		margin: 3px 0 0 10px;
+	}
+	
+	.nav-tab {
+		float: left;
+		border: 1px solid #ccc;
+		border-bottom: none;
+		margin-left: .5em;
+		padding: 5px 10px;
+		font-size: 14px;
+		line-height: 24px;
+		background: #e5e5e5;
+		color: #555;
+	}
+	
+	.nav-tab-small .nav-tab, h3 .nav-tab {
+		padding: 5px 14px;
+		font-size: 12px;
+		line-height: 16px;
+	}
+	
+	.nav-tab:focus,.nav-tab:hover {
+		background-color: #fff;
+		color: #444;
+	}
+	
+	.nav-tab-active,.nav-tab:focus:active {
+		box-shadow: none;
+	}
+	
+	.nav-tab-active {
+		margin-bottom: -1px;
+		color: #444;
+	}
+	
+	.nav-tab-active,.nav-tab-active:focus,.nav-tab-active:focus:active,.nav-tab-active:hover {
+		border-bottom: 1px solid #f1f1f1;
+		background: #f1f1f1;
+		color: #000;
+	}
+	
+	.op-nav-tab-wrapper,.wrap h2.op-nav-tab-wrapper,h1.op-nav-tab-wrapper {
+		border-bottom: 1px solid #ccc;
+		margin: 0;
+		padding-top: 9px;
+		padding-bottom: 0;
+		line-height: inherit;
+	}
+	
+	.op-nav-tab-wrapper:not(.wp-clearfix):after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+	
+	.tab-pane {
+		display: none;
+		padding: 10px 20px;
+	}
+	
+	.tab-pane.active {
+		display: block;
+	}
+	
+	.op-plugin-options {
 
-.op-plugin-options a {
-    outline: 0 !important;
-}
+		.tab-pane {
 
-.op-nav-tab-wrapper > img {
-    height: 30px;
-    width: auto;
-    margin: 3px 0 0 10px;
-}
+			textarea {
+				height: 120px;
+			}
 
-.nav-tab {
-    float: left;
-    border: 1px solid #ccc;
-    border-bottom: none;
-    margin-left: .5em;
-    padding: 5px 10px;
-    font-size: 14px;
-    line-height: 24px;
-    background: #e5e5e5;
-    color: #555;
-}
+			.available-tags {
+				display: flex;
+				justify-content: flex-start;
+				padding: 10px 0;
+				flex-wrap: wrap;
 
-.nav-tab-small .nav-tab, h3 .nav-tab {
-    padding: 5px 14px;
-    font-size: 12px;
-    line-height: 16px;
-}
+				a {
+					flex: 0 0 auto;
+					margin-right: 10px;
 
-.nav-tab:focus,.nav-tab:hover {
-    background-color: #fff;
-    color: #444;
-}
+					pre {
+						font-size: 16px;
+					}
+				}
+			}
+		}
+	}
 
-.nav-tab-active,.nav-tab:focus:active {
-    box-shadow: none;
-}
+	.op-plugin-options table th, .op-plugin-options table td {
+		padding: 5px;
+	}
+	
+	.op-plugin-options table th label {
+		display: block;
+		margin-top: 10px;
+	}
+	
+	.op-plugin-options table input[type="text"] {
+		width: 300px;
+	}
+	
+	.op-plugin-options table input[type="text"], .op-plugin-options table select {
+		padding: 5px;
+		font-size: 1.1em;
+		height: auto;
+		min-width: 100px;
+	}
+	
+	table.form-table {
 
-.nav-tab-active {
-    margin-bottom: -1px;
-    color: #444;
-}
+		th { width: 30%; }
 
-.nav-tab-active,.nav-tab-active:focus,.nav-tab-active:focus:active,.nav-tab-active:hover {
-    border-bottom: 1px solid #f1f1f1;
-    background: #f1f1f1;
-    color: #000;
-}
+		td {
+			width: 75%;
 
-.op-nav-tab-wrapper,.wrap h2.op-nav-tab-wrapper,h1.op-nav-tab-wrapper {
-    border-bottom: 1px solid #ccc;
-    margin: 0;
-    padding-top: 9px;
-    padding-bottom: 0;
-    line-height: inherit;
-}
+			input[type=text], input[type=number], input[type=color], textarea {
+				width: 25%;
+			}
+		}    
+	}
+	
+	@media (max-width: 768px) {
+		table.form-table {
+			th, td { width: 100%; }
 
-.op-nav-tab-wrapper:not(.wp-clearfix):after {
-    content: "";
-    display: table;
-    clear: both;
-}
-
-.tab-pane {
-    display: none;
-    padding: 10px 20px;
-}
-
-.tab-pane.active {
-    display: block;
-}
-
-.op-plugin-options {
-
-    .tab-pane {
-
-        textarea {
-            height: 120px;
-        }
-
-        .available-tags {
-            display: flex;
-            justify-content: flex-start;
-            padding: 10px 0;
-            flex-wrap: wrap;
-
-            a {
-                flex: 0 0 auto;
-                margin-right: 10px;
-
-                pre {
-                    font-size: 16px;
-                }
-            }
-        }
-    }
-}
-.op-plugin-options table th, .op-plugin-options table td {
-    padding: 5px;
-}
-
-.op-plugin-options table th label {
-    display: block;
-    margin-top: 10px;
-}
-
-.op-plugin-options table input[type="text"] {
-    width: 300px;
-}
-
-.op-plugin-options table input[type="text"], .op-plugin-options table select {
-    padding: 5px;
-    font-size: 1.1em;
-    height: auto;
-    min-width: 100px;
-}
-
-table.op-admin {
-    background-color: #ddd;
-}
-
-table.op-admin th {
-    background-color: #aaa;
-}
-
-table.op-admin tbody tr:nth-child(even) {
-    background-color: #ccc;
-}
-
-table.op-admin th, table.op-admin td {
-    padding: 5px 10px;
+			td {
+				input[type=text], input[type=number], input[type=color], textarea {
+						width: 100%;
+				}
+			}    
+		}
+	}
 }

@@ -21,32 +21,8 @@
                     </th>
                     <td>
                         <input name="op-plugin[stop_notifications]" type="checkbox" class="form-control"
-                            <?php echo ($options['stop_notifications'] ? ' checked="checked" ' : '') ?>
+                            <?php echo (array_key_exists('stop_notifications', $options) ? ' checked="checked" ' : '') ?>
                             value="1" />
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">
-                        <label for="op-plugin[pop_interval_minutes]">Interval between pops:</label>
-                    </th>
-                    <td>
-                        <div class="w-25">
-                            <input name="op-plugin[pop_interval_minutes]" type="number"
-                                class="form-control"
-                                value="<?php echo ($options['pop_interval_minutes']) ?>">
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">
-                        <label for="op-plugin[pop_last_order_count]">Last orders to pop:</label>
-                    </th>
-                    <td>
-                        <div class="w-25">
-                            <input name="op-plugin[pop_last_order_count]" type="number"
-                                class="form-control"
-                                value="<?php echo ($options['pop_last_order_count']) ?>">
-                        </div>
                     </td>
                 </tr>
                 <tr>
@@ -54,7 +30,7 @@
                         <label for="op-plugin[pop_background_colour]">Pop background colour:</label>
                     </th>
                     <td>
-                        <div class="w-25">
+                        <div>
                             <input name="op-plugin[pop_background_colour]" type="color"
                                 class="form-control"
                                 value="<?php echo ($options['pop_background_colour']) ?>">
@@ -66,7 +42,7 @@
                         <label for="op-plugin[pop_font_colour]">Pop text colour:</label>
                     </th>
                     <td>
-                        <div class="w-25">
+                        <div>
                             <input name="op-plugin[pop_font_colour]" type="color"
                                 class="form-control"
                                 value="<?php echo ($options['pop_font_colour']) ?>">
@@ -75,12 +51,84 @@
                 </tr>
                 <tr>
                     <th scope="row">
+                        <label for="op-plugin[pop_last_order_count]">Last orders to pop:</label>
+                    </th>
+                    <td>
+                        <div>
+                            <input name="op-plugin[pop_last_order_count]" type="number"
+                                class="form-control"
+                                value="<?php echo ($options['pop_last_order_count']) ?>">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="op-plugin[pop_interval_between_pop_refresh_seconds]">
+                            Interval (seconds) between pop product refresh:<br />
+                            <small>Product details are displayed for this amount of time before the next random product is displayed.</small>
+                        </label>
+                    </th>
+                    <td>
+                        <div>
+                            <input name="op-plugin[pop_interval_between_pop_refresh_seconds]" type="number"
+                                class="form-control"
+                                value="<?php echo ($options['pop_interval_between_pop_refresh_seconds']) ?>">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="op-plugin[pop_interval_between_pops_after_dismissed_minutes]">
+                            Interval (minutes) before pop resumes after being dismissed:<br />
+                            <small>The customer can dismiss and the pop will not be displayed again until after this interval elapses (or the customer clears their browser cache).</small>
+                        </label>
+                    </th>
+                    <td>
+                        <div>
+                            <input name="op-plugin[pop_interval_between_pops_after_dismissed_minutes]" type="number"
+                                class="form-control"
+                                value="<?php echo ($options['pop_interval_between_pops_after_dismissed_minutes']) ?>">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="op-plugin[anonomise_customer]">
+                            Anonomise Customer Name: <br>
+                            <small>(will use: 'Someone' instead of customer information)</small>
+                        </label>
+                    </th>
+                    <td>
+                        <div>
+                            <input name="op-plugin[anonomise_customer]" type="checkbox" class="form-control"
+                                <?php echo (array_key_exists('anonomise_customer', $options) ? ' checked="checked" ' : '') ?>
+                                value="1" />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="op-plugin[utm_code]">
+                            UTM Code: <br>
+                            <small>This text will be appended to the product URL.</small>
+                        </label>
+                    </th>
+                    <td>
+                        <div>
+                            <input name="op-plugin[utm_code]" type="text"
+                                class="form-control" style="width: 100%;"
+                                value="<?php echo ($options['utm_code']) ?>">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
                         <label for="op-plugin[debug_active]">Enable debugging:</label>
                     </th>
                     <td>
-                        <div class="w-25">
+                        <div>
                             <input name="op-plugin[debug_active]" type="checkbox" class="form-control"
-                                <?php echo ($options['debug_active'] ? ' checked="checked" ' : '') ?>
+                                <?php echo (array_key_exists('debug_active', $options) ? ' checked="checked" ' : '') ?>
                                 value="1" />
                         </div>
                     </td>
@@ -90,6 +138,7 @@
 
         <div id="tab-2" class="tab-pane">
             <h2>Configure customised CSS</h2>
+            <p>All selectors must be prefixed with the <code>.op-popper</code> selector to ensure scope.</p>
             <textarea name="op-plugin[custom_css]" class="form-control"
                 style="height: 50vh"><?php echo $options['custom_css']; ?></textarea>
         </div>
@@ -121,11 +170,12 @@
         foreach($product_categories as $key => $category) {
             $category_name = $category->name;
             $term_id = $category->term_id;
+            $term_slug = $category->slug;
             echo '<tr>';
             echo '<td class="text-center bg-light">';
             echo '<input name="op-plugin[excluded_categories][]" type="checkbox" ';
-            echo 'value="' .$term_id. '"';
-            echo (isset($options['excluded_categories']) && in_array($term_id, $options['excluded_categories']) ? 'checked="checked"' : ''). '/></td>';
+            echo 'value="' .$term_slug. '"';
+            echo (isset($options['excluded_categories']) && in_array($term_slug, $options['excluded_categories']) ? 'checked="checked"' : ''). '/></td>';
             echo '<td>' .$category_name. '</td>';
             echo '</tr>';
         }
