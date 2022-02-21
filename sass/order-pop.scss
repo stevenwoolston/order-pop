@@ -83,15 +83,7 @@
                 flex: 1 1 auto;
                 justify-content: center;
                 font-kerning: auto;
-                width: 500px;
-
-                @include media-breakpoint-down(lg) {
-                    width: 400px;
-                }
-            
-                @include media-breakpoint-down(md) {
-                    width: 400px;
-                }
+                width: 400px;
             
                 @include media-breakpoint-down(sm) {
                     width: 300px;
@@ -111,7 +103,8 @@
                 .meta {
                     font-size: 12px;
                     font-kerning: auto;
-        
+                    padding: 0 0 5px 0;
+
                     a {
                         font-size: 13px; 
                         text-decoration: underline;
@@ -121,14 +114,6 @@
                 p.customer-details {
                     font-size: 15px;
                     width: 400px;
-
-                    @include media-breakpoint-down(lg) {
-                        width: 400px;
-                    }
-                
-                    @include media-breakpoint-down(md) {
-                        width: 400px;
-                    }
                 
                     @include media-breakpoint-down(sm) {
                         width: 300px;
@@ -136,14 +121,7 @@
                 }
             
                 .product-name {
-
-                    @include media-breakpoint-down(lg) {
-                        width: 400px;
-                    }
-                
-                    @include media-breakpoint-down(md) {
-                        width: 400px;
-                    }
+                    width: 400px;
                 
                     @include media-breakpoint-down(sm) {
                         width: 300px;
@@ -172,7 +150,7 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                padding: 0 5px 0 0;
+                padding: 0 0 0 5px;
                 position: relative;
                 max-width: 100px !important;
                 width: 100px;

@@ -55,7 +55,7 @@ function op_get_orders() {
 	
 	shuffle($orders);
 	$qualifying_products = [];
-	$options_excluded_categories = $op_options['excluded_categories'];
+	$options_excluded_categories = (array_key_exists('excluded_categories', $op_options) ? $op_options['excluded_categories'] : []);
 	foreach($orders as $order_id) {
 
 		$order = wc_get_order($order_id);
