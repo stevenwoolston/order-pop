@@ -55,7 +55,8 @@ function op_get_orders() {
 	
 	shuffle($orders);
 	$qualifying_products = [];
-	$options_excluded_categories = $op_options['excluded_categories'];
+	$options_excluded_categories = (array_key_exists('excluded_categories', $op_options) ? $op_options['excluded_categories'] : []);
+	$excluded_categories = $options_excluded_categories ? getExcludedCategories($options_excluded_categories) : [];
 	foreach($orders as $order_id) {
 
 		$order = wc_get_order($order_id);
@@ -63,8 +64,7 @@ function op_get_orders() {
 		
 		foreach($order_products as $order_product) {
 			$product_id = $order_product->get_product()->get_id();
-			if (!$options_excluded_categories || 
-				!has_term(getExcludedCategories($options_excluded_categories), 'product_cat', $product_id)) {
+			if (!has_term($excluded_categories, 'product_cat', $product_id)) {
 				$qualifying_products[] = array_merge(
 					array(
 						'order_date' => $order->get_date_completed()->date('Y-m-d H:i:s'),
@@ -95,7 +95,9 @@ function op_get_orders() {
 				'debug_active' => $op_options['debug_active'],
 				'custom_css' => $op_options['custom_css'],
 				'utm_code' => $op_options['utm_code'],
-				// 'test' => $excluded_categories
+			),
+			'debug' => array(
+				'excluded_categories' => $excluded_categories,
 			),
 			'products' => $qualifying_products,
 		);
