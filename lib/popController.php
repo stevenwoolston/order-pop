@@ -63,7 +63,8 @@ function op_get_orders() {
 		$order_products = $order->get_items();
 		
 		foreach($order_products as $order_product) {
-			$product_id = $order_product->get_product()->get_id();
+			$product = getProductFromOrderItem($order_product);
+			$product_id = $product['id'];
 			if (!has_term($excluded_categories, 'product_cat', $product_id)) {
 				$qualifying_products[] = array_merge(
 					array(
@@ -73,7 +74,7 @@ function op_get_orders() {
 						'order_city'  => ucwords(strtolower($order->get_billing_city())),
 						'order_state'  => $order->get_billing_state()
 					),
-					getProductFromOrderItem($order_product)
+					$product
 				);
 			}
 		}
@@ -136,6 +137,7 @@ function getProductFromOrderItem($item) {
 	}
 
 	return array(
+		'id' => $product->get_id(),
 		'name' => $product->get_name(),
 		'url' => $product->get_permalink(),
 		'image' => $product->get_image(),
