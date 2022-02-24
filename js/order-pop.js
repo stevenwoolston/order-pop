@@ -140,7 +140,7 @@ jQuery(document).ready( function() {
 
 			setTimeout(function() {
 				if (debug_active) {
-					console.log(`Refreshing....${new Date()}`, data.products[productIndex]['name']);
+					console.log(`Refreshing....${new Date()}`, productName);
 				}
 				productIndex++;
 				refreshPop(data, productIndex);
