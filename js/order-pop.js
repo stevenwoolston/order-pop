@@ -134,7 +134,7 @@ jQuery(document).ready( function() {
 				jQuery('.op-content-wrapper').html(html).toggleClass('refreshing');
 			}, 500)
 
-			if (productIndex == data.products.length - 1) {
+			if (productIndex == data.products.length) {
 				productIndex = 0;
 			}
 
