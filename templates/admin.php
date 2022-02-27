@@ -1,9 +1,25 @@
+<?php
+if (wp_verify_nonce('order-pop-config-none')) {
+    add_settings_error(
+        'order-pop-settings-error',
+        esc_attr( 'settings_updated' ),
+        'Something went wrong. Try saving again.',
+        'error'
+    );
+} else {
+    if ('POST' == $_SERVER['REQUEST_METHOD']) {
+        delete_transient('order_pop_cached_orders');
+    }    
+}
+
+?>
 <div class="wrap op-plugin-options">
     <h1>Order Pop Settings</h1>
 
     <?php settings_errors(); ?>
 
-    <form action="options.php" method="post">
+    <form id="order-pop-config" action="options.php" method="post">
+    <?php wp_nonce_field('order-pop-config-nonce'); ?>        
     <?php settings_fields('op-plugin-options'); ?>
 
         <h2 class="op-nav-tab-wrapper">
