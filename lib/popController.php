@@ -9,16 +9,16 @@ add_action("wp_ajax_op_get_order", "op_get_order");
 add_action("wp_ajax_nopriv_op_get_order", "op_get_order");    
 
 function op_get_order() {
-    echo json_encode(op_get_orders());
-    die();
+	echo json_encode(op_get_orders());
+	die();
 }
 
 function op_get_orders() {
 
-    $op_options = get_option('op-plugin');
-    if ($op_options['stop_notifications']) {
-        die();
-    }
+	$op_options = get_option('op-plugin');
+	if (array_key_exists('stop_notifications', $op_options) && $op_options['stop_notifications']) {
+			die();
+	}
     
 	$pop_last_order_count = $op_options['pop_last_order_count'];
 	// $initial_date = $op_options['order_query_start_date'] != '' ? $op_options['order_query_start_date'] : '0000-01-01';
@@ -45,84 +45,97 @@ function op_get_orders() {
 		)
 	);
 
-	$query = new WC_Order_Query($args);
-	$orders = $query->get_orders();
+	$orders = get_transient('order_pop_cached_orders');
+
+	if (false == $orders) {
+		$query = new WC_Order_Query($args);
+		$orders = $query->get_orders();
+		set_transient('order_pop_cached_orders', $orders, 10 * MINUTE_IN_SECONDS);
+	}
+	
 	shuffle($orders);
-	$product = [];
+	$qualifying_products = [];
+	$options_excluded_categories = (array_key_exists('excluded_categories', $op_options) ? $op_options['excluded_categories'] : []);
+	$excluded_categories = $options_excluded_categories ? getExcludedCategories($options_excluded_categories) : [];
 	foreach($orders as $order_id) {
-		if ($product) {
-			break;
-		}
 
 		$order = wc_get_order($order_id);
 		$order_products = $order->get_items();
 		
 		foreach($order_products as $order_product) {
-			$product_id = $order_product->get_product()->get_id();
-			if (!has_term(getExcludedCategories($op_options['excluded_categories']), 'product_cat', $product_id)) {
-				$product = getProductFromOrderItem($order_product);
-				break;
+			$product = getProductFromOrderItem($order_product);
+			$product_id = $product['id'];
+			if (!$excluded_categories || ($excluded_categories && !has_term($excluded_categories, 'product_cat', $product_id))) {
+				$qualifying_products[] = array_merge(
+					array(
+						'order_date' => $order->get_date_completed()->date('Y-m-d H:i:s'),
+						'order_first_name' => (array_key_exists('anonomise_customer', $op_options) ? 'Someone ' : $order->get_billing_first_name()),
+						'order_last_name'  => (array_key_exists('anonomise_customer', $op_options) ? '' : $order->get_billing_last_name()),
+						'order_city'  => ucwords(strtolower($order->get_billing_city())),
+						'order_state'  => $order->get_billing_state()
+					),
+					$product
+				);
 			}
 		}
 	}
 
-	if (!$product) {
+	if (!$qualifying_products) {
+		delete_transient('order_pop_cached_orders');
 		die();
 	}
 
-	$category = get_term_by('id', $product->get_category_ids()[0], 'product_cat')->name;
+	shuffle($qualifying_products);
 
 	return
-			array (
-					'options' => array(
-							'interval' => $op_options['pop_interval_minutes'],
-							'sale_message' => $op_options['sale_message'],
-							'pop_background_colour' => $op_options['pop_background_colour'],
-							'pop_font_colour' => $op_options['pop_font_colour'],
-							'debugging_enabled' => $op_options['debug_active'],
-							'custom_css' => $op_options['custom_css'],
-							// 'test' => $excluded_categories
-					),
-					'order_date' => $order->get_date_completed()->date('Y-m-d H:i:s'),
-					'customer' => array(
-							'first_name' => $order->get_billing_first_name(),
-							'last_name'  => $order->get_billing_last_name(),	
-							'city'  => ucwords(strtolower($order->get_billing_city())),
-							'state'  => $order->get_billing_state(),
-					),
-					'product' => array(
-							'name' => $product->get_name(),
-							'url' => $product->get_permalink(),
-							'image' => $product->get_image(),
-							'category' => $category,
-					),
-			);
+		array (
+			'options' => array(
+				'pop_interval_between_pop_refresh_seconds' => $op_options['pop_interval_between_pop_refresh_seconds'],
+				'pop_interval_between_pops_after_dismissed_minutes' => $op_options['pop_interval_between_pops_after_dismissed_minutes'],
+				'pop_background_colour' => $op_options['pop_background_colour'],
+				'pop_font_colour' => $op_options['pop_font_colour'],
+				'debug_active' => $op_options['debug_active'],
+				'custom_css' => $op_options['custom_css'],
+				'utm_code' => $op_options['utm_code'],
+			),
+			'debug' => array(
+				'excluded_categories' => $excluded_categories,
+			),
+			'products' => $qualifying_products,
+		);
 }
 
 function getExcludedCategories($categories) {
-    $excluded_categories = [];
-    foreach($categories as $cat) {
-        // $term = get_term_by('id', $cat, 'product_cat', 'ARRAY_A');
-        array_push($excluded_categories, get_term_by('slug', $cat, 'product_cat', 'ARRAY_A')['slug']);
-    }
-    return $excluded_categories;		
+	$excluded_categories = [];
+	if (!isset($categories)) {
+		return $excluded_categories;
+	}
+
+	foreach($categories as $cat) {
+		array_push($excluded_categories, get_term_by('slug', $cat, 'product_cat', 'ARRAY_A')['slug']);
+	}
+	return $excluded_categories;		
 }
 
-function getQualifyingProduct($order, $excluded_categories) {
-    $matchFound = false;
-    foreach($order->get_items() as $item_id => $item) {
-        $product = getProductFromOrderItem($item);
-        if (!$excluded_categories || !has_term($excluded_categories, 'product_cat', $product->get_id())) {
-            $matchFound = true;
-            break;
-        }
-    }
-    return $matchFound ? $product : null;
+function getProductFromOrderItem($item) {
+	if ($item->get_product()->get_parent_id() == 0) {
+		$product = $item->get_product();
+	} else {
+		$product = wc_get_product($item->get_product()->get_parent_id());
+	}
+
+	return array(
+		'id' => $product->get_id(),
+		'name' => $product->get_name(),
+		'url' => $product->get_permalink(),
+		'image' => $product->get_image(),
+	);
 }
 
-function getProductFromOrderItem($order_item) {
-    if ($order_item->get_product()->get_parent_id() == 0) {
-        return $order_item->get_product();
-    }
-    return wc_get_product($order_item->get_product()->get_parent_id());
+function cleanUp() {
+	$op_options = get_option('op-plugin');
+
+	if (array_key_exists('sale_message', $op_options)) {
+		unset($op_options['sale_message']);
+	}
 }

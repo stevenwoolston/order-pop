@@ -4,23 +4,29 @@
     position: fixed;
     bottom: 10px;
     left: 15px;
-    width: 30vw;
     height: 15vh;
-    z-index: 9999999;
+    width: 500px;
+    z-index: 999;
     color: #fff;
     box-shadow: 5px 5px 10px #777;
     transition: all 1s ease-in-out;
     font-size: 16px;
     line-height: 16px;
+    border: 1px solid #aba9a9; 
+    border-radius: 10px;
 
     @include media-breakpoint-down(lg) {
-        width: 65vw;
+        width: 500px;
+    }
+
+    @include media-breakpoint-down(md) {
+        width: 500px;
     }
 
     @include media-breakpoint-down(sm) {
+        width: 400px;
         left: 10px;
         right: 10px;
-        width: calc(100vw - 20px);
         font-size: 0.8rem;
         padding: 0 0 0 5px;
     }
@@ -36,81 +42,131 @@
             padding: 2vh 2vw;
         }
 
-        .op-image {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 0 2vw 0 0;
-            position: relative;
-
-            @include media-breakpoint-down(sm) {
-                max-width: 80px !important;
-            }
-
-            > img {
-                max-width: 100% !important;
-                height: auto;
-                width: 100px !important;
-                position: relative;
-            }
-            
-        }
-                
-    }
-
-    .op-content {
-        display: flex;
-        flex-direction: column;
-        padding: 2vh 1vw;
-        flex: 1 1 auto;
-        justify-content: center;
-        font-kerning: auto;
-
-        p {
-            padding: 0 0 10px 0;
-            line-height: 1.2em;
-            font-kerning: auto;
-
-            @include media-breakpoint-down(sm) {
-                line-height: 1.4em;
-            }
-        }
-
-        .meta {
-            font-size: 0.8em;
-            font-kerning: auto;
-        }
-        
-        .product-name {
-            font-size: 1.2rem;
-            font-kerning: auto;
-        }
-    }
-
-    p, a {
-        color: #fff;
-        font-size: 1rem;
-    }
-
-    button.close {
-        position: absolute;
-        right: 10px;
-        top: -10px;
-        font-size: 2rem;
-        color: #fff;
-        border-width: 0;
-        z-index: 1;
-
-        &:hover {
+        button.close {        
+            position: absolute;
+            top: 0; 
+            right: 20px;
+            font-size: 2rem;
+            color: #5D1FF0;
             border-width: 0;
+            z-index: 1;
+
+            &:hover {
+                border-width: 0;
+
+                span {
+                    font-size: 2rem;
+                }
+            }
 
             span {
                 font-size: 2rem;
             }
         }
 
-        span {
-            font-size: 2rem;
+        .op-content-wrapper {
+            display: flex;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+
+            &.refreshing {
+                opacity: 0;
+            }
+
+            .op-content {
+                display: flex;
+                flex-direction: column;
+                padding: 1vw 0 1vw;
+                flex: 1 1 auto;
+                justify-content: center;
+                font-kerning: auto;
+                width: 400px;
+            
+                @include media-breakpoint-down(sm) {
+                    width: 300px;
+                }
+            
+                p {
+                    padding: 0;
+                    line-height: 1.2em;
+                    font-kerning: auto;
+                }
+
+                p, a {
+                    color: #fff;
+                    font-size: 1rem;
+                }
+        
+                .meta {
+                    font-size: 12px;
+                    font-kerning: auto;
+                    padding: 0 0 5px 0;
+
+                    a {
+                        font-size: 13px; 
+                        text-decoration: underline;
+                    }
+                }
+
+                p.customer-details {
+                    font-size: 15px;
+                    width: 400px;
+                
+                    @include media-breakpoint-down(sm) {
+                        width: 300px;
+                    }
+                }
+            
+                .product-name {
+                    width: 400px;
+                
+                    @include media-breakpoint-down(sm) {
+                        width: 300px;
+                    }
+                        
+                    a {
+                        color: #5D1FF0 !important; 
+                        font-weight: 600; 
+                        font-size: 18px;
+                        font-kerning: auto;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        text-decoration: none;    
+                        display: block; 
+                        padding: 5px 0;
+        
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                    }
+                }
+            }
+        
+            .op-image {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 0 0 0 5px;
+                position: relative;
+                max-width: 100px !important;
+                width: 100px;
+
+                @include media-breakpoint-down(sm) {
+                    max-width: 70px !important;
+                    width: 70px;
+                }
+
+                > img {
+                    max-width: 100% !important;
+                    height: auto;
+                    position: relative;
+                    max-height: 80%;
+                }
+            }
         }
     }
 }
@@ -122,7 +178,10 @@
     }
 }
 
-
+@media only screen and (max-width: 595px) {
+    // .op-popper .product-name { width: 300px; }
+    // .op-popper .op-image img { width: 80px; }
+}
 
 /* Breakpoints */
 // @include media-breakpoint-down(lg) { body { background-color: orange !important; } }
