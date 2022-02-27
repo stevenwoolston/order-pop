@@ -65,7 +65,7 @@ function op_get_orders() {
 		foreach($order_products as $order_product) {
 			$product = getProductFromOrderItem($order_product);
 			$product_id = $product['id'];
-			if (!has_term($excluded_categories, 'product_cat', $product_id)) {
+			if (!$excluded_categories || ($excluded_categories && !has_term($excluded_categories, 'product_cat', $product_id))) {
 				$qualifying_products[] = array_merge(
 					array(
 						'order_date' => $order->get_date_completed()->date('Y-m-d H:i:s'),
@@ -81,6 +81,7 @@ function op_get_orders() {
 	}
 
 	if (!$qualifying_products) {
+		delete_transient('order_pop_cached_orders');
 		die();
 	}
 
@@ -111,23 +112,10 @@ function getExcludedCategories($categories) {
 	}
 
 	foreach($categories as $cat) {
-		// $term = get_term_by('id', $cat, 'product_cat', 'ARRAY_A');
 		array_push($excluded_categories, get_term_by('slug', $cat, 'product_cat', 'ARRAY_A')['slug']);
 	}
 	return $excluded_categories;		
 }
-
-// function getQualifyingProduct($order, $excluded_categories) {
-// 	$matchFound = false;
-// 	foreach($order->get_items() as $item_id => $item) {
-// 		$product = getProductFromOrderItem($item);
-// 		if (!$excluded_categories || !has_term($excluded_categories, 'product_cat', $product->get_id())) {
-// 			$matchFound = true;
-// 			break;
-// 		}
-// 	}
-// 	return $matchFound ? $product : null;
-// }
 
 function getProductFromOrderItem($item) {
 	if ($item->get_product()->get_parent_id() == 0) {

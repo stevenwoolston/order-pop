@@ -113,6 +113,10 @@ jQuery(document).ready( function() {
 				productUrl = data.products[productIndex].url,
 				productImage = data.products[productIndex].image;
 				
+			if (debug_active) {
+				console.log(`Refreshing....${new Date()}`, productName);
+			}
+
 			var html = `
 				<div class="op-content" style="color: ${fontColour}">
 						<span class="orderdate meta" style="color: ${fontColour}">${formattedDate}</span>
@@ -134,14 +138,11 @@ jQuery(document).ready( function() {
 				jQuery('.op-content-wrapper').html(html).toggleClass('refreshing');
 			}, 500)
 
-			if (productIndex == data.products.length) {
+			if (productIndex == data.products.length-1) {
 				productIndex = 0;
 			}
 
 			setTimeout(function() {
-				if (debug_active) {
-					console.log(`Refreshing....${new Date()}`, productName);
-				}
 				productIndex++;
 				refreshPop(data, productIndex);
 			}, refreshInterval)
