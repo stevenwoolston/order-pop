@@ -6,7 +6,7 @@
 if (! defined('ABSPATH')) exit;  // if direct access 
 
 function op_add_admin_page() {
-    add_menu_page('Order Pop Theme Options', 'Order Pop', 'manage_options', 'op_plugin', 'op_theme_create_settings_page', 'dashicons-admin-generic', 90);
+    add_menu_page('Order Pop Theme Options', 'Order Pop', 'manage_options', 'op_plugin', 'op_theme_create_settings_page', 'dashicons-sas', 90);
     add_submenu_page('op_plugin',  'WWD Theme Options',  'Settings',  'manage_options',  'op_plugin',  'op_theme_create_settings_page');
 
     register_setting('op-plugin-options', 'op-plugin');

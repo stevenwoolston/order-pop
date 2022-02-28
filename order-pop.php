@@ -34,6 +34,18 @@ register_activation_hook(__FILE__, 'op_activation_hook');
 register_deactivation_hook(__FILE__, 'op_deactivation_hook');
 register_uninstall_hook(__FILE__, 'op_uninstall_hook');
 
+add_action('admin_head', 'my_custom_favicon');
+function my_custom_favicon() {
+  echo '
+    <style>
+    .dashicons-sas {
+        background-image: url("'.plugin_dir_path(__FILE__).'/images/60-logo-dashicon.png");
+        background-repeat: no-repeat;
+        background-position: center; 
+    }
+    </style>
+';
+}
 function op_enqueue_assets() {
     wp_enqueue_style('op-style', plugin_dir_url(__FILE__) . '/dist/css/order-pop.min.css', array(), '1.6', 'all');
 
